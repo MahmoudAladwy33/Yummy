@@ -35,7 +35,7 @@ public class AppSplash extends AppCompatActivity {
         lottie.addAnimatorListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                startActivity(new Intent(AppSplash.this, MainActivity.class));
+                startActivity(new Intent(AppSplash.this, OnBoarding.class));
                 finish();
             }
         });

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Yummy</string>
     <string name="AppName">Yummy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="onboarding_first_screen_title"> Plan Your Meals Smartly </string>
+    <string name="on_boarding_first_screen_desc">Create personalized meal plans that fit your lifestyle and goals</string>
+    <string name="on_boarding_img_first_screen_desc">on_boarding_img_desc</string>
+    <string name="onboarding_second_screen_title"> Eat Better Every Day </string>
+    <string name="on_boarding_second_screen_desc">Organize your meals, save time, and enjoy healthier food choices</string>
+    <string name="on_boarding_img_second_screen_desc">on_boarding_img_desc</string>
 </resources>
