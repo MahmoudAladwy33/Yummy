@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".onboarding_second_screen">
+
+
+    <ImageView
+        android:id="@+id/iv_on_boarding_second_screen"
+        android:layout_width="394dp"
+        android:layout_height="551dp"
+        android:contentDescription="@string/on_boarding_img_second_screen_desc"
+        android:scaleType="centerCrop"
+        android:src="@drawable/onboarding_second_screen"
+        app:layout_constraintBottom_toTopOf="@id/tv_on_boarding_second_screen_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+
+    <TextView
+        android:id="@+id/tv_on_boarding_second_screen_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/montserrat_extrabold"
+        android:gravity="center"
+        android:text="@string/onboarding_second_screen_title"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_on_boarding_second_screen" />
+
+
+    <TextView
+        android:id="@+id/tv_on_boarding_second_screen_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="@string/on_boarding_second_screen_desc"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_second_screen_title" />
+
+    <Button
+        android:id="@+id/btn_onboarding_second_screen_next"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/btn_circle"
+        android:elevation="4dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text=">"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:backgroundTint="@color/MainColor_lighter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/on_boarding_nav"
+    app:startDestination="@id/onboarding_first_screen">
+
+    <fragment
+        android:id="@+id/onboarding_first_screen"
+        android:name="com.example.yummy.onboarding_first_screen"
+        android:label="fragment_onboarding_first_screen"
+        tools:layout="@layout/fragment_onboarding_first_screen" >
+        <action
+            android:id="@+id/action_onboarding_first_screen_to_onboarding_second_screen"
+            app:destination="@id/onboarding_second_screen"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboarding_second_screen"
+        android:name="com.example.yummy.onboarding_second_screen"
+        android:label="fragment_onboarding_second_screen"
+        tools:layout="@layout/fragment_onboarding_second_screen" />
+</navigation>
