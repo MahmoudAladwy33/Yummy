@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Yummy" parent="Theme.Material3.DayNight.NoActionBar">
 
-        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:fontFamily">@font/app_fonts</item>
 
 
         <!-- Customize your light theme here. -->
