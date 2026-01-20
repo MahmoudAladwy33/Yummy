@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/login"
-        android:name="com.example.yummy.login"
+        android:name="com.example.yummy.ui.login.login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/sign_up"
-        android:name="com.example.yummy.sign_up"
+        android:name="com.example.yummy.ui.signup.sign_up"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
 </navigation>

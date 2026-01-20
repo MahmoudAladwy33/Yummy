@@ -1,20 +1,17 @@
-package com.example.yummy;
+package com.example.yummy.ui.splash;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.yummy.ui.onboarding.OnBoarding;
+import com.example.yummy.R;
 
 public class AppSplash extends AppCompatActivity {
 

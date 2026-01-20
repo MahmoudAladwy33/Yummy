@@ -1,15 +1,16 @@
-package com.example.yummy;
+package com.example.yummy.ui.login;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavAction;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.yummy.R;
 
 public class login extends Fragment {
 
