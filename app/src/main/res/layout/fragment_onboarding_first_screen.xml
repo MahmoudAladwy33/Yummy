@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".onboarding_first_screen">
+    tools:context=".ui.onboarding.onboarding_first_screen">
 
 
     <ImageView
@@ -62,10 +62,10 @@
         android:background="@drawable/btn_circle"
         android:elevation="4dp"
         android:fontFamily="@font/montserrat_medium"
-        android:text=">"
+        android:text="@string/btn_next"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:backgroundTint="@color/MainColor_lighter"
+        app:backgroundTint="@color/MainColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.907"

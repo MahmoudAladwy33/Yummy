@@ -1,15 +1,17 @@
-package com.example.yummy;
+package com.example.yummy.ui.onboarding;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.yummy.R;
+import com.example.yummy.ui.auth.Auth;
 
 public class onboarding_second_screen extends Fragment {
     public onboarding_second_screen() {
