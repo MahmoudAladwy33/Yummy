@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.yummy.ui.onboarding.OnBoarding;
 import com.example.yummy.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AppSplash extends AppCompatActivity {
 
@@ -36,5 +37,13 @@ public class AppSplash extends AppCompatActivity {
                 finish();
             }
         });
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            // User logged in → انتقل للـ Home / MainActivity
+        } else {
+            // User not logged in → انتقل للـ Auth screen
+        }
+
     }
 }
