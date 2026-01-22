@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Yummy">
         <activity
+            android:name=".ui.home.Home"
+            android:exported="false" />
+        <activity
             android:name=".ui.auth.Auth"
             android:exported="false" />
         <activity

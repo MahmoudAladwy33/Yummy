@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.login.login">
+    tools:context=".ui.auth.login.login">
 
     <TextView
         android:id="@+id/sign_in"
@@ -25,13 +25,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
-       android:fontFamily="@font/montserrat_bold"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/tv_welcome_back"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in" />
+        app:layout_constraintTop_toBottomOf="@id/sign_in" />
 
     <EditText
         android:id="@+id/et_email"
@@ -49,9 +47,9 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_welcome_back" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_back" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordLayout"
@@ -63,9 +61,9 @@
         app:hintEnabled="false"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/MainColor"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
@@ -97,9 +95,23 @@
         android:textAllCaps="false"
         android:textSize="18sp"
         android:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
+
+    <ProgressBar
+        android:id="@+id/progress_login"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/MainColor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 
     <View
         android:id="@+id/view_line_left"
@@ -108,10 +120,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="8dp"
         android:background="#E0E0E0"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_continue_with"
-        app:layout_constraintEnd_toStartOf="@+id/tv_continue_with"
+        app:layout_constraintBottom_toBottomOf="@id/tv_continue_with"
+        app:layout_constraintEnd_toStartOf="@id/tv_continue_with"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_continue_with" />
+        app:layout_constraintTop_toTopOf="@id/tv_continue_with" />
 
     <TextView
         android:id="@+id/tv_continue_with"
@@ -122,9 +134,9 @@
         android:text="@string/continue_with"
         android:textColor="@color/gray"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     <View
         android:id="@+id/view_line_right"
@@ -133,10 +145,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="24dp"
         android:background="#E0E0E0"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_continue_with"
+        app:layout_constraintBottom_toBottomOf="@id/tv_continue_with"
+        app:layout_constraintStart_toEndOf="@id/tv_continue_with"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_continue_with"
-        app:layout_constraintTop_toTopOf="@+id/tv_continue_with" />
+        app:layout_constraintTop_toTopOf="@id/tv_continue_with" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_google"
@@ -155,9 +167,9 @@
         android:textAllCaps="false"
         android:textColor="#3C4043"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_continue_with" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_continue_with" />
 
     <TextView
         android:id="@+id/tv_no_account"
@@ -168,10 +180,10 @@
         android:text="@string/don_t_have_an_account"
         android:textColor="#888888"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_sign_up"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_google" />
+        app:layout_constraintEnd_toStartOf="@+id/tv_sign_up"
+        app:layout_constraintTop_toBottomOf="@+id/btn_google"
+        app:layout_constraintHorizontal_chainStyle="packed" />
 
     <TextView
         android:id="@+id/tv_sign_up"
@@ -182,11 +194,9 @@
         android:textColor="@color/MainColor"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_no_account"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_no_account"
-        app:layout_constraintTop_toTopOf="@+id/tv_no_account" />
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_no_account"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_no_account" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
