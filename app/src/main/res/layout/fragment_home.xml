@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.home.home.HomeFragment">
+    tools:context=".ui.home.home.view.HomeFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/searchCard"
@@ -83,8 +83,20 @@
                 android:id="@+id/imgRandomMeal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/onboarding_first_screen" />
+                android:scaleType="centerCrop" />
+
+            <ProgressBar
+                android:id="@+id/progress_home"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/MainColor"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:layout_width="match_parent"

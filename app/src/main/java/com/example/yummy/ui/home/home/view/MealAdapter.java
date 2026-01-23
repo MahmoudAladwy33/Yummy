@@ -1,4 +1,4 @@
-package com.example.yummy.ui.home.home;
+package com.example.yummy.ui.home.home.view;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +19,8 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
     private List<Meal> mealList;
 
-    public MealAdapter(List<Meal> mealList) {
-        this.mealList = new ArrayList<>(mealList);
+    public MealAdapter() {
+        this.mealList = new ArrayList<>();
 
     }
 
@@ -59,8 +59,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         }
 
         public void bind(Meal meal) {
-
-
             Glide.with(itemView)
                     .load(meal.getMealImg())
                     .into(mealImageView);
