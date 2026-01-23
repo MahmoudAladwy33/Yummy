@@ -3,18 +3,18 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/home"
+        android:icon="@drawable/ic_home"
         android:title="@string/home_fragment" />
     <item
         android:id="@+id/favouriteMealsFragment"
-        android:icon="@drawable/favorite"
+        android:icon="@drawable/ic_fav"
         android:title="@string/favourite_fragment" />
     <item
         android:id="@+id/calenderFragment"
-        android:icon="@drawable/calender"
+        android:icon="@drawable/ic_calender"
         android:title="@string/calender_fragment" />
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/profile"
+        android:icon="@drawable/ic_profile"
         android:title="@string/profile_fragment" />
 </menu>

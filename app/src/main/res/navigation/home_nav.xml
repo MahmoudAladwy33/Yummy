@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.yummy.HomeFragment"
+        android:name="com.example.yummy.ui.home.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/favouriteMealsFragment"
-        android:name="com.example.yummy.FavouriteMealsFragment"
+        android:name="com.example.yummy.ui.home.fav.FavouriteMealsFragment"
         android:label="fragment_favourite_meals"
         tools:layout="@layout/fragment_favourite_meals" />
     <fragment
         android:id="@+id/calenderFragment"
-        android:name="com.example.yummy.CalenderFragment"
+        android:name="com.example.yummy.ui.home.calender.CalenderFragment"
         android:label="fragment_calender"
         tools:layout="@layout/fragment_calender" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.yummy.ProfileFragment"
+        android:name="com.example.yummy.ui.home.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

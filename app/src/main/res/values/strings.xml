@@ -31,4 +31,6 @@
     <string name="search_meals_hint">Search meals...</string>
     <string name="random_meal_name">Chicken Curry</string>
     <string name="random_meal_country">Indian</string>
+    <string name="tv_country_name">Country</string>
+    <string name="tv_meal_name">Meal Name</string>
 </resources>

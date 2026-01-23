@@ -11,7 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.yummy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Home extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
