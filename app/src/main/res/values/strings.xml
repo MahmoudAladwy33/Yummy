@@ -24,4 +24,8 @@
     <string name="confirm_password_hint">Confirm password</string>
     <string name="btn_sign_up">Sign up</string>
     <string name="log_in">Log in</string>
+    <string name="home_fragment">Home</string>
+    <string name="favourite_fragment">Favourite</string>
+    <string name="calender_fragment">Calender</string>
+    <string name="profile_fragment">Profile</string>
 </resources>
