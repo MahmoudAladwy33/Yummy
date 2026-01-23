@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.auth.login.login">
+    tools:context=".ui.auth.login.view.login">
 
     <TextView
         android:id="@+id/textView"
@@ -61,11 +61,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:hintEnabled="false"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/MainColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_email">
+        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_email"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/MainColor">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_sign_up_password"
@@ -90,11 +90,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:hintEnabled="false"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/MainColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUpPasswordLayout">
+        app:layout_constraintTop_toBottomOf="@+id/SignUpPasswordLayout"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/MainColor">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_confirm_password"
@@ -119,13 +119,13 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/login_button_bg"
-        android:text="@string/btn_sign_up"
-        android:fontFamily="@font/app_fonts"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textAllCaps="false"
-        android:textSize="18sp"
         android:elevation="4dp"
+        android:fontFamily="@font/app_fonts"
+        android:text="@string/btn_sign_up"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirmPasswordLayout" />
@@ -135,14 +135,13 @@
         android:id="@+id/progress_sign_up"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:visibility="gone"
         android:indeterminate="true"
         android:indeterminateTint="@color/MainColor"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view_line_left"
@@ -182,7 +181,6 @@
         app:layout_constraintTop_toTopOf="@+id/tv_continue_with" />
 
 
-
     <TextView
         android:id="@+id/tv_no_account"
         android:layout_width="wrap_content"
@@ -210,7 +208,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_no_account"
         app:layout_constraintTop_toTopOf="@+id/tv_no_account" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

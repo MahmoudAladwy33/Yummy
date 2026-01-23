@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.auth.login.login">
+    tools:context=".ui.auth.login.view.login">
 
     <TextView
         android:id="@+id/sign_in"
@@ -47,8 +47,8 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_welcome_back" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -59,11 +59,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:hintEnabled="false"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/MainColor"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_email">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_email"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/MainColor">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
@@ -88,29 +88,28 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/login_button_bg"
-        android:text="@string/btn_login"
-        android:fontFamily="@font/app_fonts"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textAllCaps="false"
-        android:textSize="18sp"
         android:elevation="4dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/app_fonts"
+        android:text="@string/btn_login"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
 
     <ProgressBar
         android:id="@+id/progress_login"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:visibility="gone"
         android:indeterminate="true"
         android:indeterminateTint="@color/MainColor"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <View
@@ -134,8 +133,8 @@
         android:text="@string/continue_with"
         android:textColor="@color/gray"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     <View
@@ -146,8 +145,8 @@
         android:layout_marginEnd="24dp"
         android:background="#E0E0E0"
         app:layout_constraintBottom_toBottomOf="@id/tv_continue_with"
-        app:layout_constraintStart_toEndOf="@id/tv_continue_with"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_continue_with"
         app:layout_constraintTop_toTopOf="@id/tv_continue_with" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -167,8 +166,8 @@
         android:textAllCaps="false"
         android:textColor="#3C4043"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_continue_with" />
 
     <TextView
@@ -180,10 +179,10 @@
         android:text="@string/don_t_have_an_account"
         android:textColor="#888888"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_sign_up"
-        app:layout_constraintTop_toBottomOf="@+id/btn_google"
-        app:layout_constraintHorizontal_chainStyle="packed" />
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_google" />
 
     <TextView
         android:id="@+id/tv_sign_up"
@@ -194,9 +193,9 @@
         android:textColor="@color/MainColor"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/tv_no_account"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_no_account"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_no_account"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_no_account" />
+        app:layout_constraintStart_toEndOf="@+id/tv_no_account"
+        app:layout_constraintTop_toTopOf="@+id/tv_no_account" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

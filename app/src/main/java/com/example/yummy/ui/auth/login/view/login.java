@@ -1,13 +1,7 @@
-package com.example.yummy.ui.auth.login;
+package com.example.yummy.ui.auth.login.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +10,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.yummy.R;
 import com.example.yummy.data.auth.LoginRepo;
@@ -26,8 +25,8 @@ import com.example.yummy.ui.auth.login.presenter.LoginPresenterImp;
 import com.example.yummy.ui.auth.presenter.GooglePresenter;
 import com.example.yummy.ui.auth.presenter.GooglePresenterImp;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
@@ -35,20 +34,18 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class login extends Fragment implements LoginView, GoogleView {
 
+    private static final int RC_SIGN_IN = 100;
     EditText et_email;
     EditText et_pass;
     Button btn_login;
     ProgressBar progressBar;
-
     LoginPresenter presenter;
     GooglePresenter gPresenter;
-
     Button btn_google;
-    private static final int RC_SIGN_IN = 100;
-
     private GoogleSignInClient googleSignInClient; // Class-level variable
 
-    public login() {}
+    public login() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

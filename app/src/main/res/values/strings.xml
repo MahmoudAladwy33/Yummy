@@ -24,4 +24,15 @@
     <string name="confirm_password_hint">Confirm password</string>
     <string name="btn_sign_up">Sign up</string>
     <string name="log_in">Log in</string>
+    <string name="home_fragment">Home</string>
+    <string name="favourite_fragment">Favourite</string>
+    <string name="calender_fragment">Calender</string>
+    <string name="profile_fragment">Profile</string>
+    <string name="search_meals_hint">Search meals...</string>
+    <string name="random_meal_name">Chicken Curry</string>
+    <string name="random_meal_country">Indian</string>
+    <string name="tv_country_name">Country</string>
+    <string name="tv_meal_name">Meal Name</string>
+    <string name="tv_popular_meals">Popular Meals</string>
+    <string name="tv_meal_of_the_day">Meal of The Day</string>
 </resources>

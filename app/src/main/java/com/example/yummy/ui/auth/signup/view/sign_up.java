@@ -1,12 +1,6 @@
-package com.example.yummy.ui.auth.signup;
+package com.example.yummy.ui.auth.signup.view;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,32 +10,28 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.example.yummy.R;
 import com.example.yummy.data.auth.SignUpRepo;
-import com.example.yummy.data.auth.datasource.remote.SignUpRemoteDataSource;
 import com.example.yummy.ui.auth.signup.presenter.SignUpPresenter;
 import com.example.yummy.ui.auth.signup.presenter.SignUpPresenterImp;
-import com.google.firebase.auth.FirebaseAuth;
 
-public class sign_up extends Fragment  implements SignUpView{
+public class sign_up extends Fragment implements SignUpView {
 
 
+    EditText et_email;
+    EditText et_password;
+    EditText et_confirm_pass;
+    Button btn_sign_up;
+    SignUpPresenter presenter;
+    ProgressBar progressBar;
     public sign_up() {
         // Required empty public constructor
     }
-    EditText et_email ;
-    EditText et_password ;
-    EditText et_confirm_pass ;
-
-
-    Button btn_sign_up;
-
-    SignUpPresenter presenter;
-    ProgressBar progressBar;
-
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +50,7 @@ public class sign_up extends Fragment  implements SignUpView{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView tv_login= view.findViewById(R.id.tv_log_in);
+        TextView tv_login = view.findViewById(R.id.tv_log_in);
         et_email = view.findViewById(R.id.et_sign_up_email);
         et_password = view.findViewById(R.id.et_sign_up_password);
         et_confirm_pass = view.findViewById(R.id.et_confirm_password);

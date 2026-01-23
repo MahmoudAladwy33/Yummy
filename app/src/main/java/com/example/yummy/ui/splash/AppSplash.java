@@ -10,8 +10,8 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.yummy.ui.onboarding.OnBoarding;
 import com.example.yummy.R;
+import com.example.yummy.ui.home.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AppSplash extends AppCompatActivity {
@@ -33,7 +33,7 @@ public class AppSplash extends AppCompatActivity {
         lottie.addAnimatorListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                startActivity(new Intent(AppSplash.this, OnBoarding.class));
+                startActivity(new Intent(AppSplash.this, HomeActivity.class));
                 finish();
             }
         });
