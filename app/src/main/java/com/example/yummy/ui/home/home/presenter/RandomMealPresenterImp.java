@@ -21,15 +21,19 @@ public class RandomMealPresenterImp implements RandomMealPresenter {
 
     @Override
     public void getRandomMeals() {
+        randomMealViews.showLoading();
         mealRepo.getRandomMeal(new MealsNetworkResponse() {
             @Override
             public void onSuccess(List<Meal> mealList) {
-                randomMealViews.onSuccess(mealList);
+                randomMealViews.hideLoading();
+                randomMealViews.showRandomMeal(mealList.get(0));
+
             }
 
             @Override
             public void onError(String errorMessage) {
-                randomMealViews.onError(errorMessage);
+                randomMealViews.hideLoading();
+                randomMealViews.showError(errorMessage);
             }
         });
     }

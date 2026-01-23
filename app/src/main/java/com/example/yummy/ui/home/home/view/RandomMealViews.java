@@ -2,10 +2,12 @@ package com.example.yummy.ui.home.home.view;
 
 import com.example.yummy.data.meal.model.Meal;
 
-import java.util.List;
-
 public interface RandomMealViews {
-    void onSuccess(List<Meal> mealList);
+    void showRandomMeal(Meal meal);
 
-    void onError(String message);
+    void showError(String message);
+
+    void showLoading();
+
+    void hideLoading();
 }

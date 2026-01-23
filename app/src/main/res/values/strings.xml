@@ -33,4 +33,6 @@
     <string name="random_meal_country">Indian</string>
     <string name="tv_country_name">Country</string>
     <string name="tv_meal_name">Meal Name</string>
+    <string name="tv_popular_meals">Popular Meals</string>
+    <string name="tv_meal_of_the_day">Meal of The Day</string>
 </resources>

@@ -26,12 +26,20 @@ public class MealsRemoteDataSource {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
                 mealList = response.body().mealList;
-                callback.onSuccess(mealList);
+
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(mealList);
+                } else {
+
+                    callback.onError("No Meal Found");
+                }
+
+
             }
 
             @Override
             public void onFailure(Call<MealResponse> call, Throwable t) {
-                callback.onError(t.getMessage());
+
             }
         });
 
