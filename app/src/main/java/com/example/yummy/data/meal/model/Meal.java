@@ -1,9 +1,26 @@
 package com.example.yummy.data.meal.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Meal {
 
+public class Meal implements Parcelable {
+
+    public static final Creator<Meal> CREATOR = new Creator<Meal>() {
+        @Override
+        public Meal createFromParcel(Parcel in) {
+            return new Meal(in);
+        }
+
+        @Override
+        public Meal[] newArray(int size) {
+            return new Meal[size];
+        }
+    };
     @SerializedName("idMeal")
     private String mealId;
     @SerializedName("strMeal")
@@ -113,6 +130,7 @@ public class Meal {
     private String creativeCommons;
     @SerializedName("dateModified")
     private String dateModified;
+
     public Meal(String mealImg) {
         this.mealImg = mealImg;
     }
@@ -187,6 +205,62 @@ public class Meal {
         this.imageSource = imageSource;
         this.creativeCommons = creativeCommons;
         this.dateModified = dateModified;
+    }
+
+    protected Meal(Parcel in) {
+        mealId = in.readString();
+        mealName = in.readString();
+        mealAlternate = in.readString();
+        category = in.readString();
+        area = in.readString();
+        instructions = in.readString();
+        mealImg = in.readString();
+        tags = in.readString();
+        youtubeUrl = in.readString();
+        ingredient1 = in.readString();
+        ingredient2 = in.readString();
+        ingredient3 = in.readString();
+        ingredient4 = in.readString();
+        ingredient5 = in.readString();
+        ingredient6 = in.readString();
+        ingredient7 = in.readString();
+        ingredient8 = in.readString();
+        ingredient9 = in.readString();
+        ingredient10 = in.readString();
+        ingredient11 = in.readString();
+        ingredient12 = in.readString();
+        ingredient13 = in.readString();
+        ingredient14 = in.readString();
+        ingredient15 = in.readString();
+        ingredient16 = in.readString();
+        ingredient17 = in.readString();
+        ingredient18 = in.readString();
+        ingredient19 = in.readString();
+        ingredient20 = in.readString();
+        measure1 = in.readString();
+        measure2 = in.readString();
+        measure3 = in.readString();
+        measure4 = in.readString();
+        measure5 = in.readString();
+        measure6 = in.readString();
+        measure7 = in.readString();
+        measure8 = in.readString();
+        measure9 = in.readString();
+        measure10 = in.readString();
+        measure11 = in.readString();
+        measure12 = in.readString();
+        measure13 = in.readString();
+        measure14 = in.readString();
+        measure15 = in.readString();
+        measure16 = in.readString();
+        measure17 = in.readString();
+        measure18 = in.readString();
+        measure19 = in.readString();
+        measure20 = in.readString();
+        sourceUrl = in.readString();
+        imageSource = in.readString();
+        creativeCommons = in.readString();
+        dateModified = in.readString();
     }
 
     public String getMealId() {
@@ -611,5 +685,67 @@ public class Meal {
 
     public void setDateModified(String dateModified) {
         this.dateModified = dateModified;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(mealId);
+        parcel.writeString(mealName);
+        parcel.writeString(mealAlternate);
+        parcel.writeString(category);
+        parcel.writeString(area);
+        parcel.writeString(instructions);
+        parcel.writeString(mealImg);
+        parcel.writeString(tags);
+        parcel.writeString(youtubeUrl);
+        parcel.writeString(ingredient1);
+        parcel.writeString(ingredient2);
+        parcel.writeString(ingredient3);
+        parcel.writeString(ingredient4);
+        parcel.writeString(ingredient5);
+        parcel.writeString(ingredient6);
+        parcel.writeString(ingredient7);
+        parcel.writeString(ingredient8);
+        parcel.writeString(ingredient9);
+        parcel.writeString(ingredient10);
+        parcel.writeString(ingredient11);
+        parcel.writeString(ingredient12);
+        parcel.writeString(ingredient13);
+        parcel.writeString(ingredient14);
+        parcel.writeString(ingredient15);
+        parcel.writeString(ingredient16);
+        parcel.writeString(ingredient17);
+        parcel.writeString(ingredient18);
+        parcel.writeString(ingredient19);
+        parcel.writeString(ingredient20);
+        parcel.writeString(measure1);
+        parcel.writeString(measure2);
+        parcel.writeString(measure3);
+        parcel.writeString(measure4);
+        parcel.writeString(measure5);
+        parcel.writeString(measure6);
+        parcel.writeString(measure7);
+        parcel.writeString(measure8);
+        parcel.writeString(measure9);
+        parcel.writeString(measure10);
+        parcel.writeString(measure11);
+        parcel.writeString(measure12);
+        parcel.writeString(measure13);
+        parcel.writeString(measure14);
+        parcel.writeString(measure15);
+        parcel.writeString(measure16);
+        parcel.writeString(measure17);
+        parcel.writeString(measure18);
+        parcel.writeString(measure19);
+        parcel.writeString(measure20);
+        parcel.writeString(sourceUrl);
+        parcel.writeString(imageSource);
+        parcel.writeString(creativeCommons);
+        parcel.writeString(dateModified);
     }
 }

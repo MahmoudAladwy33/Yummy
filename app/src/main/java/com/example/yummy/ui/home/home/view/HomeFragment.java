@@ -11,7 +11,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +36,7 @@ public class HomeFragment extends Fragment implements RandomMealViews {
     ProgressBar progressBar;
     MealAdapter adapter;
     RandomMealPresenter randomMealPresenter;
+    CardView random_meal_card_view;
     List<Meal> randomMeals = new ArrayList<>();
 
     public HomeFragment() {
@@ -54,7 +57,19 @@ public class HomeFragment extends Fragment implements RandomMealViews {
         iv_randomMeal = view.findViewById(R.id.imgRandomMeal);
         tv_random_meal_name = view.findViewById(R.id.tvRandomMealName);
         tv_random_meal_country = view.findViewById(R.id.tvRandomMealCountry);
+        random_meal_card_view = view.findViewById(R.id.random_meal_card_view);
         progressBar = view.findViewById(R.id.progress_home);
+
+
+        random_meal_card_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeFragmentDirections.ActionHomeFragmentToMealDetailsFragment action =
+                        HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(randomMeals.get(0));
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(action);
+            }
+        });
 
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(requireContext(),

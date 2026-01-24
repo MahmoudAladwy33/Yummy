@@ -35,4 +35,11 @@
     <string name="tv_meal_name">Meal Name</string>
     <string name="tv_popular_meals">Popular Meals</string>
     <string name="tv_meal_of_the_day">Meal of The Day</string>
+    <string name="tvMealNameDetails">Honey Glazed Salmon</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="btnStartCooking">▶ Start Cooking</string>
+    <string name="tvInstructions">1. Prepare the glaze...\n2. Season the salmon...\n3. Pan-sear fillets...</string>
+    <string name="how_to_cook">How to Cook</string>
+    <string name="tvIngredientName">Carrots</string>
+    <string name="tvIngredientMeasure">2 Lbs</string>
 </resources>
