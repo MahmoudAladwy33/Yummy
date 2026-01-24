@@ -11,10 +11,11 @@
 
     <TextView
         android:id="@+id/tvIngredientName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/tvIngredientName"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="#333333"
         android:textSize="16sp" />
 
@@ -23,7 +24,7 @@
         android:id="@+id/tvIngredientMeasure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tvIngredientMeasure"
+        android:layout_marginStart="6dp"
         android:textColor="#666666"
         android:textSize="14sp"
         android:textStyle="italic" />

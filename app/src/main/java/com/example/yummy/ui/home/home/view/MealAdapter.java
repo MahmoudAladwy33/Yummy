@@ -17,10 +17,12 @@ import java.util.List;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
 
+    OnItemClickListener onItemClickListener;
     private List<Meal> mealList;
 
-    public MealAdapter() {
+    public MealAdapter(OnItemClickListener onItemClickListener) {
         this.mealList = new ArrayList<>();
+        this.onItemClickListener = onItemClickListener;
 
     }
 
@@ -41,6 +43,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
     public void onBindViewHolder(@NonNull MealViewHolder holder, int position) {
         Meal meal = mealList.get(position);
         holder.bind(meal);
+
     }
 
     @Override
@@ -63,7 +66,13 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
                     .load(meal.getMealImg())
                     .into(mealImageView);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemClick(meal);
 
+                }
+            });
         }
     }
 }

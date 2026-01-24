@@ -33,7 +33,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/mealDetailsFragment"
-        android:name="com.example.yummy.ui.home.mealdetails.MealDetailsFragment"
+        android:name="com.example.yummy.ui.mealdetails.MealDetailsFragment"
         android:label="fragment_meal_details"
         tools:layout="@layout/fragment_meal_details">
         <action

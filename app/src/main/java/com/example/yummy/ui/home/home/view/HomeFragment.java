@@ -26,7 +26,7 @@ import com.example.yummy.ui.home.home.presenter.RandomMealPresenterImp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements RandomMealViews {
+public class HomeFragment extends Fragment implements RandomMealViews, OnItemClickListener {
 
     private static final int RANDOM_COUNT = 10;
     RecyclerView recyclerView;
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment implements RandomMealViews {
                         false)
         );
         randomMeals.clear();
-        adapter = new MealAdapter();
+        adapter = new MealAdapter(this);
         recyclerView.setAdapter(adapter);
 
         randomMealPresenter = new RandomMealPresenterImp(getContext(), this);
@@ -129,5 +129,13 @@ public class HomeFragment extends Fragment implements RandomMealViews {
     @Override
     public void hideLoading() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onItemClick(Meal meal) {
+        HomeFragmentDirections.ActionHomeFragmentToMealDetailsFragment action =
+                HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(meal);
+        NavHostFragment.findNavController(HomeFragment.this)
+                .navigate(action);
     }
 }
