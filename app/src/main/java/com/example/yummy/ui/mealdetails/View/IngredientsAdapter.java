@@ -1,4 +1,4 @@
-package com.example.yummy.ui.mealdetails;
+package com.example.yummy.ui.mealdetails.View;
 
 
 import android.view.LayoutInflater;

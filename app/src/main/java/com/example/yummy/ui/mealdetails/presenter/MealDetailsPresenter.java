@@ -8,4 +8,6 @@ import java.util.List;
 public interface MealDetailsPresenter {
 
     List<IngredientItem> getIngredientsList(Meal meal);
+
+    void addMealToFavorites(Meal meal);
 }

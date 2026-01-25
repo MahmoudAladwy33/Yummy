@@ -1,10 +1,11 @@
-package com.example.yummy.ui.mealdetails;
+package com.example.yummy.ui.mealdetails.View;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 import java.util.List;
 
-public class MealDetailsFragment extends Fragment {
+public class MealDetailsFragment extends Fragment implements MealDetailsViews {
 
     ImageView iv_meal_image;
     TextView tv_meal_name;
@@ -40,7 +41,10 @@ public class MealDetailsFragment extends Fragment {
     List<IngredientItem> ingredients;
     MealDetailsPresenter mealDetailsPresenter;
     Meal meal;
+
+    ImageButton btn_add_to_fav;
     private YouTubePlayer activeYouTubePlayer;
+    private boolean isFavorite = false;
 
     public MealDetailsFragment() {
         // Required empty public constructor
@@ -56,7 +60,7 @@ public class MealDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 /// initialization
-        mealDetailsPresenter = new MealDetailsPresenterImp();
+        mealDetailsPresenter = new MealDetailsPresenterImp(requireContext(), this);
         iv_meal_image = view.findViewById(R.id.imgMealDetails);
         tv_meal_name = view.findViewById(R.id.tvMealNameDetails);
         tvMealDetailsCountry = view.findViewById(R.id.tvMealDetailsCountry);
@@ -64,6 +68,7 @@ public class MealDetailsFragment extends Fragment {
         tv_meal_instructions = view.findViewById(R.id.tvInstructions);
         youtubePlayerView = view.findViewById(R.id.youtubePlayerView);
         rvIngredients = view.findViewById(R.id.rvIngredients);
+        btn_add_to_fav = view.findViewById(R.id.btnAddToFav);
         adapter = new IngredientsAdapter();
         getLifecycle().addObserver(youtubePlayerView);
         ((HomeActivity) requireActivity()).findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
@@ -110,6 +115,16 @@ public class MealDetailsFragment extends Fragment {
                 }
             }
         });
+
+
+        btn_add_to_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mealDetailsPresenter.addMealToFavorites(meal);
+
+
+            }
+        });
     }
 
     @Override
@@ -119,4 +134,9 @@ public class MealDetailsFragment extends Fragment {
     }
 
 
+    @Override
+    public void addToFavSuccess() {
+        btn_add_to_fav.setImageResource(R.drawable.ic_details_fav_fill);
+        isFavorite = true;
+    }
 }

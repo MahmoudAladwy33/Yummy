@@ -1,4 +1,6 @@
-package com.example.yummy.Network;
+package com.example.yummy.data.meal.datasource.remote;
+
+import com.example.yummy.data.meal.model.MealResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

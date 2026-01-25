@@ -1,9 +1,8 @@
 package com.example.yummy.data.meal.datasource.remote;
 
-import com.example.yummy.Network.MealResponse;
-import com.example.yummy.Network.MealService;
 import com.example.yummy.Network.Network;
 import com.example.yummy.data.meal.model.Meal;
+import com.example.yummy.data.meal.model.MealResponse;
 
 import java.util.List;
 
