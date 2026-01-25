@@ -55,7 +55,7 @@ public class MealDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+/// initialization
         mealDetailsPresenter = new MealDetailsPresenterImp();
         iv_meal_image = view.findViewById(R.id.imgMealDetails);
         tv_meal_name = view.findViewById(R.id.tvMealNameDetails);
@@ -71,6 +71,8 @@ public class MealDetailsFragment extends Fragment {
         rvIngredients.setLayoutManager(
                 new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         );
+
+        // get data from args
         MealDetailsFragmentArgs args = MealDetailsFragmentArgs.fromBundle(getArguments());
         meal = args.getMealArgs();
         rvIngredients.setAdapter(adapter);
@@ -79,12 +81,13 @@ public class MealDetailsFragment extends Fragment {
         adapter.setList(ingredients);
 
 
+        // set data to views
         Glide.with(this).load(meal.getMealImg()).into(iv_meal_image);
         tv_meal_name.setText(meal.getMealName());
         tv_meal_instructions.setText(meal.getInstructions());
         tvMealDetailsCountry.setText(meal.getArea());
 
-
+// youtube player
         youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
@@ -96,6 +99,7 @@ public class MealDetailsFragment extends Fragment {
             }
         });
 
+        // button start cooking
         btnStartCooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

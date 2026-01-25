@@ -88,7 +88,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:padding="8dp"
-                            android:src="@drawable/ic_details_fav_fill" />
+                            android:src="@drawable/ic_details_fav_unfill" />
 
                         <ImageButton
                             android:id="@+id/btnCalendar"
