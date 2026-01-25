@@ -10,4 +10,6 @@ public interface MealDetailsPresenter {
     List<IngredientItem> getIngredientsList(Meal meal);
 
     void addMealToFavorites(Meal meal);
+
+    void removeMealFromFavorites(Meal meal);
 }

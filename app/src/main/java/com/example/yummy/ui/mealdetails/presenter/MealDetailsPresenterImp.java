@@ -42,6 +42,13 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
         mealDetailsViews.addToFavSuccess();
     }
 
+    @Override
+    public void removeMealFromFavorites(Meal meal) {
+        mealRepo.deleteFavMeal(mapMealToMealRoom(meal));
+        mealDetailsViews.removeFromFavSuccess();
+
+    }
+
     public MealRoom mapMealToMealRoom(Meal meal) {
         return new MealRoom(
                 meal.getMealId(),

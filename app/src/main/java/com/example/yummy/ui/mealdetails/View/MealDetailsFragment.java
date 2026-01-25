@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -120,7 +121,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
         btn_add_to_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mealDetailsPresenter.addMealToFavorites(meal);
+                if (!isFavorite) {
+                    mealDetailsPresenter.addMealToFavorites(meal);
+                } else {
+                    mealDetailsPresenter.removeMealFromFavorites(meal);
+                }
 
 
             }
@@ -138,5 +143,15 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     public void addToFavSuccess() {
         btn_add_to_fav.setImageResource(R.drawable.ic_details_fav_fill);
         isFavorite = true;
+        Toast.makeText(requireContext(), "Added to Favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void removeFromFavSuccess() {
+
+        btn_add_to_fav.setImageResource(R.drawable.ic_details_fav_unfill);
+        isFavorite = false;
+        Toast.makeText(requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show();
+
     }
 }
