@@ -37,74 +37,17 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
     }
 
     @Override
-    public void addMealToFavorites(Meal meal) {
-        mealRepo.insertFavMeal(mapMealToMealRoom(meal));
+    public void addMealToFavorites(MealRoom meal) {
+        mealRepo.insertFavMeal(meal);
         mealDetailsViews.addToFavSuccess();
     }
 
     @Override
-    public void removeMealFromFavorites(Meal meal) {
-        mealRepo.deleteFavMeal(mapMealToMealRoom(meal));
+    public void removeMealFromFavorites(MealRoom meal) {
+        mealRepo.deleteFavMeal(meal);
         mealDetailsViews.removeFromFavSuccess();
 
     }
 
-    public MealRoom mapMealToMealRoom(Meal meal) {
-        return new MealRoom(
-                meal.getMealId(),
-                meal.getMealName(),
-                meal.getMealAlternate(),
-                meal.getCategory(),
-                meal.getArea(),
-                meal.getInstructions(),
-                meal.getMealImg(),
-                meal.getTags(),
-                meal.getYoutubeUrl(),
-                meal.getIngredient(1),
-                meal.getIngredient(2),
-                meal.getIngredient(3),
-                meal.getIngredient(4),
-                meal.getIngredient(5),
-                meal.getIngredient(6),
-                meal.getIngredient(7),
-                meal.getIngredient(8),
-                meal.getIngredient(9),
-                meal.getIngredient(10),
-                meal.getIngredient(11),
-                meal.getIngredient(12),
-                meal.getIngredient(13),
-                meal.getIngredient(14),
-                meal.getIngredient(15),
-                meal.getIngredient(16),
-                meal.getIngredient(17),
-                meal.getIngredient(18),
-                meal.getIngredient(19),
-                meal.getIngredient(20),
-                meal.getMeasure(1),
-                meal.getMeasure(2),
-                meal.getMeasure(3),
-                meal.getMeasure(4),
-                meal.getMeasure(5),
-                meal.getMeasure(6),
-                meal.getMeasure(7),
-                meal.getMeasure(8),
-                meal.getMeasure(9),
-                meal.getMeasure(10),
-                meal.getMeasure(11),
-                meal.getMeasure(12),
-                meal.getMeasure(13),
-                meal.getMeasure(14),
-                meal.getMeasure(15),
-                meal.getMeasure(16),
-                meal.getMeasure(17),
-                meal.getMeasure(18),
-                meal.getMeasure(19),
-                meal.getMeasure(20),
-                meal.getSourceUrl(),
-                meal.getImageSource(),
-                meal.getCreativeCommons(),
-                meal.getDateModified()
-        );
-    }
 
 }

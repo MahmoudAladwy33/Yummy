@@ -71,6 +71,68 @@ public class MealRoom {
     public MealRoom() {
     }
 
+
+    public MealRoom(@NonNull Meal meal) {
+        this.mealId = meal.getMealId();
+        this.mealName = meal.getMealName();
+        this.mealAlternate = meal.getMealAlternate();
+        this.category = meal.getCategory();
+        this.area = meal.getArea();
+        this.instructions = meal.getInstructions();
+        this.mealImg = meal.getMealImg();
+        this.tags = meal.getTags();
+        this.youtubeUrl = meal.getYoutubeUrl();
+
+
+        this.ingredient1 = meal.getIngredient(1);
+        this.ingredient2 = meal.getIngredient(2);
+        this.ingredient3 = meal.getIngredient(3);
+        this.ingredient4 = meal.getIngredient(4);
+        this.ingredient5 = meal.getIngredient(5);
+        this.ingredient6 = meal.getIngredient(6);
+        this.ingredient7 = meal.getIngredient(7);
+        this.ingredient8 = meal.getIngredient(8);
+        this.ingredient9 = meal.getIngredient(9);
+        this.ingredient10 = meal.getIngredient(10);
+        this.ingredient11 = meal.getIngredient(11);
+        this.ingredient12 = meal.getIngredient(12);
+        this.ingredient13 = meal.getIngredient(13);
+        this.ingredient14 = meal.getIngredient(14);
+        this.ingredient15 = meal.getIngredient(15);
+        this.ingredient16 = meal.getIngredient(16);
+        this.ingredient17 = meal.getIngredient(17);
+        this.ingredient18 = meal.getIngredient(18);
+        this.ingredient19 = meal.getIngredient(19);
+        this.ingredient20 = meal.getIngredient(20);
+
+
+        this.measure1 = meal.getMeasure(1);
+        this.measure2 = meal.getMeasure(2);
+        this.measure3 = meal.getMeasure(3);
+        this.measure4 = meal.getMeasure(4);
+        this.measure5 = meal.getMeasure(5);
+        this.measure6 = meal.getMeasure(6);
+        this.measure7 = meal.getMeasure(7);
+        this.measure8 = meal.getMeasure(8);
+        this.measure9 = meal.getMeasure(9);
+        this.measure10 = meal.getMeasure(10);
+        this.measure11 = meal.getMeasure(11);
+        this.measure12 = meal.getMeasure(12);
+        this.measure13 = meal.getMeasure(13);
+        this.measure14 = meal.getMeasure(14);
+        this.measure15 = meal.getMeasure(15);
+        this.measure16 = meal.getMeasure(16);
+        this.measure17 = meal.getMeasure(17);
+        this.measure18 = meal.getMeasure(18);
+        this.measure19 = meal.getMeasure(19);
+        this.measure20 = meal.getMeasure(20);
+
+        this.sourceUrl = meal.getSourceUrl();
+        this.imageSource = meal.getImageSource();
+        this.creativeCommons = meal.getCreativeCommons();
+        this.dateModified = meal.getDateModified();
+    }
+
     public MealRoom(@NonNull String mealId, String mealName, String mealAlternate, String category, String area, String instructions, String mealImg, String tags, String youtubeUrl, String ingredient1, String ingredient2, String ingredient3, String ingredient4, String ingredient5, String ingredient6, String ingredient7, String ingredient8, String ingredient9, String ingredient10, String ingredient11, String ingredient12, String ingredient13, String ingredient14, String ingredient15, String ingredient16, String ingredient17, String ingredient18, String ingredient19, String ingredient20, String measure1, String measure2, String measure3, String measure4, String measure5, String measure6, String measure7, String measure8, String measure9, String measure10, String measure11, String measure12, String measure13, String measure14, String measure15, String measure16, String measure17, String measure18, String measure19, String measure20, String sourceUrl, String imageSource, String creativeCommons, String dateModified) {
         this.mealId = mealId;
         this.mealName = mealName;

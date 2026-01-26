@@ -42,4 +42,6 @@
     <string name="how_to_cook">How to Cook</string>
     <string name="tvIngredientName">Carrots</string>
     <string name="tvIngredientMeasure">2 Lbs</string>
+    <string name="tvFavMealName">Meal Name</string>
+    <string name="tvFavMealCountry">Egypt</string>
 </resources>

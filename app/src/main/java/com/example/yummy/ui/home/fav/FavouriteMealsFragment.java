@@ -1,59 +1,45 @@
 package com.example.yummy.ui.home.fav;
 
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yummy.R;
+import com.example.yummy.data.meal.model.MealRoom;
+import com.example.yummy.ui.home.fav.presenter.FavMealsPresenter;
+import com.example.yummy.ui.home.fav.presenter.FavMealsPresenterImp;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FavouriteMealsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FavouriteMealsFragment extends Fragment {
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class FavouriteMealsFragment extends Fragment implements FavMealsViews, OnDeleteFavClickListener {
+
+
+    RecyclerView rvFavMeals;
+    FavMealAdapter adapter;
+    FavMealsPresenter presenter;
+
+    ProgressBar progressBar;
 
     public FavouriteMealsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FavouriteMeals.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FavouriteMealsFragment newInstance(String param1, String param2) {
-        FavouriteMealsFragment fragment = new FavouriteMealsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -61,5 +47,36 @@ public class FavouriteMealsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favourite_meals, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rvFavMeals = view.findViewById(R.id.rvFavMeals);
+        progressBar = view.findViewById(R.id.progress_fav_meals);
+        adapter = new FavMealAdapter(this);
+        rvFavMeals.setAdapter(adapter);
+        presenter = new FavMealsPresenterImp(getContext(), this);
+        progressBar.setVisibility(VISIBLE);
+        presenter.loadFavMeals().observe(this, new Observer<List<MealRoom>>() {
+            @Override
+            public void onChanged(List<MealRoom> mealRooms) {
+                progressBar.setVisibility(View.GONE);
+                adapter.setFavMeals(mealRooms);
+            }
+        });
+
+    }
+
+    @Override
+    public void deleteFavMealSuccess() {
+        Toast.makeText(requireContext(), "Product deleted successfully", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onDeleteFavClick(MealRoom meal) {
+        presenter.deleteFavMeal(meal);
+
     }
 }

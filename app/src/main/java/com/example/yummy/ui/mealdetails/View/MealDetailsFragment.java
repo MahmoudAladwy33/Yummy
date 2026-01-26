@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.yummy.R;
 import com.example.yummy.data.meal.model.IngredientItem;
 import com.example.yummy.data.meal.model.Meal;
+import com.example.yummy.data.meal.model.MealRoom;
 import com.example.yummy.ui.home.HomeActivity;
 import com.example.yummy.ui.mealdetails.presenter.MealDetailsPresenter;
 import com.example.yummy.ui.mealdetails.presenter.MealDetailsPresenterImp;
@@ -117,14 +118,15 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
             }
         });
 
+        MealRoom mealRoom = new MealRoom(meal);
 
         btn_add_to_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isFavorite) {
-                    mealDetailsPresenter.addMealToFavorites(meal);
+                    mealDetailsPresenter.addMealToFavorites(mealRoom);
                 } else {
-                    mealDetailsPresenter.removeMealFromFavorites(meal);
+                    mealDetailsPresenter.removeMealFromFavorites(mealRoom);
                 }
 
 
