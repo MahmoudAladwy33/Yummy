@@ -15,4 +15,7 @@ public interface MealDetailsViews {
 
     void hideLoading();
 
+    void addToCalendarSuccess(String displayDate);
+
+
 }

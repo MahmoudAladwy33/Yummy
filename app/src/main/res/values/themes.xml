@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Yummy" parent="Theme.Material3.DayNight.NoActionBar">
 
@@ -10,4 +10,10 @@
     </style>
 
     <style name="Theme.Yummy" parent="Base.Theme.Yummy" />
+
+    <style name="MyDatePickerTheme" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorPrimary">@color/MainColor</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/MainColor</item>
+    </style>
 </resources>

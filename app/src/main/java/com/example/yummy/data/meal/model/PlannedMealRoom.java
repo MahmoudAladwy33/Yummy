@@ -16,14 +16,32 @@ public class PlannedMealRoom {
 
     private String mealImg;
 
+    private String plannedDate;
+
     public PlannedMealRoom() {
     }
 
-    public PlannedMealRoom(@NonNull String mealId, String mealName, String area, String mealImg) {
+    public PlannedMealRoom(@NonNull String mealId, String mealName, String area, String mealImg, String plannedDate) {
         this.mealId = mealId;
         this.mealName = mealName;
         this.area = area;
         this.mealImg = mealImg;
+        this.plannedDate = plannedDate;
+    }
+
+    public PlannedMealRoom(Meal meal) {
+        this.mealId = meal.getMealId();
+        this.mealName = meal.getMealName();
+        this.area = meal.getArea();
+        this.mealImg = meal.getMealImg();
+    }
+
+    public String getPlannedDate() {
+        return plannedDate;
+    }
+
+    public void setPlannedDate(String plannedDate) {
+        this.plannedDate = plannedDate;
     }
 
     public String getMealId() {

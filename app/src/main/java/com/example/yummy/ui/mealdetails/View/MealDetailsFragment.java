@@ -1,5 +1,7 @@
 package com.example.yummy.ui.mealdetails.View;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.yummy.R;
-import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.IngredientItem;
 import com.example.yummy.data.meal.model.Meal;
 import com.example.yummy.ui.home.HomeActivity;
@@ -29,6 +30,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MealDetailsFragment extends Fragment implements MealDetailsViews {
@@ -48,6 +50,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     Meal meal;
 
     ImageButton btn_add_to_fav;
+    ImageButton btnCalendar;
+    String displayDate;
     private YouTubePlayer activeYouTubePlayer;
     private boolean isFavorite = false;
 
@@ -76,6 +80,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
         youtubePlayerView = view.findViewById(R.id.youtubePlayerView);
         rvIngredients = view.findViewById(R.id.rvIngredients);
         btn_add_to_fav = view.findViewById(R.id.btnAddToFav);
+        btnCalendar = view.findViewById(R.id.btnCalendar);
         progress_meal_details = view.findViewById(R.id.progress_meal_details);
         adapter = new IngredientsAdapter();
         getLifecycle().addObserver(youtubePlayerView);
@@ -116,14 +121,44 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
             @Override
             public void onClick(View view) {
                 if (meal == null) return;
-                FavMealRoom favMealRoom = new FavMealRoom(meal);
                 if (!isFavorite) {
-                    mealDetailsPresenter.addMealToFavorites(favMealRoom);
+                    mealDetailsPresenter.addMealToFavorites(meal);
                 } else {
-                    mealDetailsPresenter.removeMealFromFavorites(favMealRoom);
+                    mealDetailsPresenter.removeMealFromFavorites(meal);
                 }
             }
         });
+
+        // add to calendar click
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar now = Calendar.getInstance();
+                int currentHour = now.get(Calendar.HOUR_OF_DAY);
+                int currentMinute = now.get(Calendar.MINUTE);
+                int currentYear = now.get(Calendar.YEAR);
+                int currentMonth = now.get(Calendar.MONTH);
+                int currentDay = now.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), R.style.MyDatePickerTheme,
+                        (datePicker, year, month, dayOfMonth) -> {
+
+                            TimePickerDialog timePickerDialog = new TimePickerDialog(requireContext(), R.style.MyDatePickerTheme,
+                                    (timePicker, hourOfDay, minute) -> {
+                                        if (meal != null) {
+                                            mealDetailsPresenter.addMealToCalendar(meal, year, month, dayOfMonth, hourOfDay, minute);
+                                        }
+                                    }, currentHour, currentMinute, true);
+                            timePickerDialog.show();
+
+                        }, currentYear, currentMonth, currentDay);
+
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
+            }
+        });
+
+
     }
 
     @Override
@@ -149,7 +184,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     @Override
     public void showMealById(Meal meal) {
         this.meal = meal;
-
         Glide.with(this).load(meal.getMealImg()).into(iv_meal_image);
         tv_meal_name.setText(meal.getMealName());
         tv_meal_instructions.setText(meal.getInstructions());
@@ -188,5 +222,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     public void hideLoading() {
         progress_meal_details.setVisibility(View.GONE);
 
+    }
+
+    @Override
+    public void addToCalendarSuccess(String displayDate) {
+        Toast.makeText(requireContext(), "Selected: " + displayDate, Toast.LENGTH_LONG).show();
     }
 }
