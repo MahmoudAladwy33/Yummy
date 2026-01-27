@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yummy.R;
@@ -91,7 +92,11 @@ public class CalendarFragment extends Fragment implements PlannedMealsViews, OnP
     @Override
     public void onPlannedMealClick(String mealId) {
 
+        CalendarFragmentDirections.ActionCalenderFragmentToMealDetailsFragment action =
+                CalendarFragmentDirections.actionCalenderFragmentToMealDetailsFragment(mealId);
+        action.setSource("fromPlanned");
 
+        NavHostFragment.findNavController(this).navigate(action);
     }
 
     @Override

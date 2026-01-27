@@ -1,5 +1,7 @@
 package com.example.yummy.ui.mealdetails.View;
 
+import static android.view.View.GONE;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -84,7 +86,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
         progress_meal_details = view.findViewById(R.id.progress_meal_details);
         adapter = new IngredientsAdapter();
         getLifecycle().addObserver(youtubePlayerView);
-        ((HomeActivity) requireActivity()).findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
+        ((HomeActivity) requireActivity()).findViewById(R.id.bottom_nav_view).setVisibility(GONE);
 
         rvIngredients.setLayoutManager(
                 new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
@@ -99,6 +101,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
         if ("fromFav".equals(source)) {
             btn_add_to_fav.setImageResource(R.drawable.ic_details_fav_fill);
             isFavorite = true;
+        } else if ("fromPlanned".equals(source)) {
+            btn_add_to_fav.setVisibility(GONE);
+            btnCalendar.setVisibility(GONE);
+
+
         } else {
             btn_add_to_fav.setImageResource(R.drawable.ic_details_fav_unfill);
             isFavorite = false;
@@ -109,7 +116,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
             @Override
             public void onClick(View view) {
                 if (activeYouTubePlayer != null) {
-                    btnStartCooking.setVisibility(View.GONE);
+                    btnStartCooking.setVisibility(GONE);
                     youtubePlayerView.setVisibility(View.VISIBLE);
                     activeYouTubePlayer.play();
                 }
@@ -220,7 +227,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
 
     @Override
     public void hideLoading() {
-        progress_meal_details.setVisibility(View.GONE);
+        progress_meal_details.setVisibility(GONE);
 
     }
 
