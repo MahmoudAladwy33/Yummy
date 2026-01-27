@@ -1,59 +1,49 @@
 package com.example.yummy.ui.home.calendar;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yummy.R;
+import com.example.yummy.data.meal.model.PlannedMealRoom;
+import com.example.yummy.ui.home.calendar.presenter.PlannedMealsPresenter;
+import com.example.yummy.ui.home.calendar.presenter.PlannedMealsPresenterImp;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CalendarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class CalendarFragment extends Fragment {
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class CalendarFragment extends Fragment implements PlannedMealsViews, OnPlannedClickListener {
+
+    RecyclerView rvFavMeals;
+    PlannedMealsAdapter adapter;
+    PlannedMealsPresenter presenter;
+
+    TextView tvEmptyPlanned;
+    ProgressBar progressBar;
+
 
     public CalendarFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Calender.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CalendarFragment newInstance(String param1, String param2) {
-        CalendarFragment fragment = new CalendarFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -61,5 +51,51 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_calendar, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rvFavMeals = view.findViewById(R.id.rvCalendarMeals);
+        progressBar = view.findViewById(R.id.progress_calendar_meals);
+        tvEmptyPlanned = view.findViewById(R.id.tvEmptyCalendar);
+        adapter = new PlannedMealsAdapter(this);
+        rvFavMeals.setAdapter(adapter);
+        presenter = new PlannedMealsPresenterImp(getContext(), this);
+        progressBar.setVisibility(VISIBLE);
+        presenter.loadPlannedMeals().observe(getViewLifecycleOwner(), new Observer<List<PlannedMealRoom>>() {
+            @Override
+            public void onChanged(List<PlannedMealRoom> plannedMealRooms) {
+                if (plannedMealRooms == null || plannedMealRooms.isEmpty()) {
+                    progressBar.setVisibility(GONE);
+                    tvEmptyPlanned.setVisibility(View.VISIBLE);
+                    rvFavMeals.setVisibility(GONE);
+                } else {
+                    progressBar.setVisibility(GONE);
+                    tvEmptyPlanned.setVisibility(GONE);
+                    rvFavMeals.setVisibility(View.VISIBLE);
+                    adapter.setPlannedMeals(plannedMealRooms);
+                }
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onDeletePlannedClick(PlannedMealRoom meal) {
+        presenter.deletePlannedMeal(meal);
+
+    }
+
+    @Override
+    public void onPlannedMealClick(String mealId) {
+
+
+    }
+
+    @Override
+    public void deletePlannedMealSuccess() {
+        Toast.makeText(requireContext(), "Meal deleted successfully", Toast.LENGTH_SHORT).show();
     }
 }

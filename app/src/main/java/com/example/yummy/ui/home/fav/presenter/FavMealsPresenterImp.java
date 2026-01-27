@@ -22,7 +22,6 @@ public class FavMealsPresenterImp implements FavMealsPresenter {
 
     @Override
     public LiveData<List<FavMealRoom>> loadFavMeals() {
-
         return mealRepo.getFavMeals();
 
     }

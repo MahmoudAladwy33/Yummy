@@ -11,17 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <ImageView
-            android:id="@+id/imgFavMeal"
+            android:id="@+id/imgCalendarMeal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
+
 
         <View
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="bottom"
             android:background="@drawable/gradient_bottom_shadow" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,30 +33,50 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+
             <TextView
-                android:id="@+id/tvFavMealName"
+                android:id="@+id/tvCalendarMealName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:shadowColor="#000000"
                 android:shadowDx="2"
                 android:shadowDy="2"
                 android:shadowRadius="2"
-                android:text="@string/tvFavMealName"
+                android:text="@string/tvCalendarMealName"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvFavMealCountry"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvFavMealCountry"
-                android:textColor="@color/offWhite"
-                android:textSize="14sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvCalendarMealCountry"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tvCalendarMealCountry"
+                    android:textColor="#E0E0E0"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvCalendarMealDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvCalendarMealDate"
+                    android:textColor="#E0E0E0"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
         </LinearLayout>
 
+
         <ImageButton
-            android:id="@+id/btnRemoveFav"
+            android:id="@+id/btnRemoveCalendar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="top|end"
