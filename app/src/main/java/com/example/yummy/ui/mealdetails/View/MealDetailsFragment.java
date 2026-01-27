@@ -61,8 +61,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-/// initialization
+
+        // initialization
         mealDetailsPresenter = new MealDetailsPresenterImp(requireContext(), this);
+
         iv_meal_image = view.findViewById(R.id.imgMealDetails);
         tv_meal_name = view.findViewById(R.id.tvMealNameDetails);
         tvMealDetailsCountry = view.findViewById(R.id.tvMealDetailsCountry);
@@ -79,34 +81,21 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
                 new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         );
 
-        // get data from args
+        // get mealId from arguments
         MealDetailsFragmentArgs args = MealDetailsFragmentArgs.fromBundle(getArguments());
-        meal = args.getMealArgs();
-        rvIngredients.setAdapter(adapter);
-        ingredients =
-                mealDetailsPresenter.getIngredientsList(meal);
-        adapter.setList(ingredients);
+        String mealId = args.getMealId();
+        String source = args.getSource();
+        mealDetailsPresenter.getMealById(mealId);
 
+        if ("fromFav".equals(source)) {
+            btn_add_to_fav.setImageResource(R.drawable.ic_details_fav_fill);
+            isFavorite = true;
+        } else {
+            btn_add_to_fav.setImageResource(R.drawable.ic_details_fav_unfill);
+            isFavorite = false;
+        }
 
-        // set data to views
-        Glide.with(this).load(meal.getMealImg()).into(iv_meal_image);
-        tv_meal_name.setText(meal.getMealName());
-        tv_meal_instructions.setText(meal.getInstructions());
-        tvMealDetailsCountry.setText(meal.getArea());
-
-// youtube player
-        youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                activeYouTubePlayer = youTubePlayer;
-                String videoId = meal.getYoutubeUrl()
-                        .substring(meal.getYoutubeUrl().lastIndexOf("v=") + 2);
-                activeYouTubePlayer.cueVideo(videoId, 0);
-
-            }
-        });
-
-        // button start cooking
+        // start cooking button
         btnStartCooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,18 +107,17 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
             }
         });
 
-        MealRoom mealRoom = new MealRoom(meal);
-
+        // add/remove favorite click
         btn_add_to_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (meal == null) return;
+                MealRoom mealRoom = new MealRoom(meal);
                 if (!isFavorite) {
                     mealDetailsPresenter.addMealToFavorites(mealRoom);
                 } else {
                     mealDetailsPresenter.removeMealFromFavorites(mealRoom);
                 }
-
-
             }
         });
     }
@@ -140,7 +128,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
         ((HomeActivity) requireActivity()).findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
     }
 
-
     @Override
     public void addToFavSuccess() {
         btn_add_to_fav.setImageResource(R.drawable.ic_details_fav_fill);
@@ -150,10 +137,40 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
 
     @Override
     public void removeFromFavSuccess() {
-
         btn_add_to_fav.setImageResource(R.drawable.ic_details_fav_unfill);
         isFavorite = false;
         Toast.makeText(requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void showMealById(Meal meal) {
+        this.meal = meal;
+
+        Glide.with(this).load(meal.getMealImg()).into(iv_meal_image);
+        tv_meal_name.setText(meal.getMealName());
+        tv_meal_instructions.setText(meal.getInstructions());
+        tvMealDetailsCountry.setText(meal.getArea());
+
+        ingredients = mealDetailsPresenter.getIngredientsList(meal);
+        adapter.setList(ingredients);
+        rvIngredients.setAdapter(adapter);
+
+        // YouTube player listener (only once)
+        if (activeYouTubePlayer == null) {
+            youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                    activeYouTubePlayer = youTubePlayer;
+                    String videoId = meal.getYoutubeUrl()
+                            .substring(meal.getYoutubeUrl().lastIndexOf("v=") + 2);
+                    activeYouTubePlayer.cueVideo(videoId, 0);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 }

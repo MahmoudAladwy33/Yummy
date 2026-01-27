@@ -3,6 +3,7 @@ package com.example.yummy.ui.mealdetails.presenter;
 import android.content.Context;
 
 import com.example.yummy.data.meal.MealRepo;
+import com.example.yummy.data.meal.datasource.remote.MealsNetworkResponse;
 import com.example.yummy.data.meal.model.IngredientItem;
 import com.example.yummy.data.meal.model.Meal;
 import com.example.yummy.data.meal.model.MealRoom;
@@ -47,6 +48,21 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
         mealRepo.deleteFavMeal(meal);
         mealDetailsViews.removeFromFavSuccess();
 
+    }
+
+    @Override
+    public void getMealById(String id) {
+        mealRepo.getMealById(id, new MealsNetworkResponse() {
+            @Override
+            public void onSuccess(List<Meal> mealList) {
+                mealDetailsViews.showMealById(mealList.get(0));
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                mealDetailsViews.showError(errorMessage);
+            }
+        });
     }
 
 

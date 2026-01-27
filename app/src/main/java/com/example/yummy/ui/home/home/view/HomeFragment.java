@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
             @Override
             public void onClick(View view) {
                 HomeFragmentDirections.ActionHomeFragmentToMealDetailsFragment action =
-                        HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(randomMeals.get(0));
+                        HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(randomMeals.get(0).getMealId());
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(action);
             }
@@ -134,7 +134,7 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
     @Override
     public void onItemClick(Meal meal) {
         HomeFragmentDirections.ActionHomeFragmentToMealDetailsFragment action =
-                HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(meal);
+                HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(meal.getMealId());
         NavHostFragment.findNavController(HomeFragment.this)
                 .navigate(action);
     }

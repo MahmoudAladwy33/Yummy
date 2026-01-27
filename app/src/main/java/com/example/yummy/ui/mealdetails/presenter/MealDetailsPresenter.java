@@ -13,4 +13,8 @@ public interface MealDetailsPresenter {
     void addMealToFavorites(MealRoom meal);
 
     void removeMealFromFavorites(MealRoom meal);
+
+    void getMealById(String id);
+
+
 }

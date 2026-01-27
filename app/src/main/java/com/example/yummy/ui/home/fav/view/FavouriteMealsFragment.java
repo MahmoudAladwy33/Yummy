@@ -1,4 +1,4 @@
-package com.example.yummy.ui.home.fav;
+package com.example.yummy.ui.home.fav.view;
 
 import static android.view.View.VISIBLE;
 
@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yummy.R;
@@ -23,13 +25,14 @@ import com.example.yummy.ui.home.fav.presenter.FavMealsPresenterImp;
 import java.util.List;
 
 
-public class FavouriteMealsFragment extends Fragment implements FavMealsViews, OnDeleteFavClickListener {
+public class FavouriteMealsFragment extends Fragment implements FavMealsViews, OnFavClickListener {
 
 
     RecyclerView rvFavMeals;
     FavMealAdapter adapter;
     FavMealsPresenter presenter;
 
+    TextView tvEmptyFav;
     ProgressBar progressBar;
 
     public FavouriteMealsFragment() {
@@ -54,15 +57,23 @@ public class FavouriteMealsFragment extends Fragment implements FavMealsViews, O
         super.onViewCreated(view, savedInstanceState);
         rvFavMeals = view.findViewById(R.id.rvFavMeals);
         progressBar = view.findViewById(R.id.progress_fav_meals);
+        tvEmptyFav = view.findViewById(R.id.tvEmptyFav);
         adapter = new FavMealAdapter(this);
         rvFavMeals.setAdapter(adapter);
         presenter = new FavMealsPresenterImp(getContext(), this);
         progressBar.setVisibility(VISIBLE);
-        presenter.loadFavMeals().observe(this, new Observer<List<MealRoom>>() {
+        presenter.loadFavMeals().observe(getViewLifecycleOwner(), new Observer<List<MealRoom>>() {
             @Override
             public void onChanged(List<MealRoom> mealRooms) {
                 progressBar.setVisibility(View.GONE);
-                adapter.setFavMeals(mealRooms);
+                if (mealRooms == null || mealRooms.isEmpty()) {
+                    tvEmptyFav.setVisibility(View.VISIBLE);
+                    rvFavMeals.setVisibility(View.GONE);
+                } else {
+                    tvEmptyFav.setVisibility(View.GONE);
+                    rvFavMeals.setVisibility(View.VISIBLE);
+                    adapter.setFavMeals(mealRooms);
+                }
             }
         });
 
@@ -70,13 +81,24 @@ public class FavouriteMealsFragment extends Fragment implements FavMealsViews, O
 
     @Override
     public void deleteFavMealSuccess() {
-        Toast.makeText(requireContext(), "Product deleted successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Meal deleted successfully", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onDeleteFavClick(MealRoom meal) {
         presenter.deleteFavMeal(meal);
+
+    }
+
+    @Override
+    public void onFavMealClick(String mealId) {
+        FavouriteMealsFragmentDirections.ActionFavouriteMealsFragmentToMealDetailsFragment action =
+                FavouriteMealsFragmentDirections
+                        .actionFavouriteMealsFragmentToMealDetailsFragment(mealId);
+        action.setSource("fromFav");
+
+        NavHostFragment.findNavController(this).navigate(action);
 
     }
 }

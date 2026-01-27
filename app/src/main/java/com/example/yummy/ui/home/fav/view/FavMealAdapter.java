@@ -1,4 +1,4 @@
-package com.example.yummy.ui.home.fav;
+package com.example.yummy.ui.home.fav.view;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +20,14 @@ import java.util.List;
 public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.FavViewHolder> {
 
 
-    private OnDeleteFavClickListener listener;
+    private OnFavClickListener listener;
     private List<MealRoom> favMeals;
 
-    public FavMealAdapter(OnDeleteFavClickListener listener) {
+
+    public FavMealAdapter(OnFavClickListener listener) {
         this.favMeals = new ArrayList<>();
         this.listener = listener;
+
     }
 
     public void setFavMeals(List<MealRoom> meals) {
@@ -70,7 +72,7 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.FavViewH
 
         public void bind(MealRoom meal) {
             tvName.setText(meal.getMealName());
-            //  tvCountry.setText(meal.getStrArea());
+            tvCountry.setText(meal.getArea());
 
             Glide.with(itemView.getContext())
                     .load(meal.getMealImg())
@@ -83,6 +85,15 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.FavViewH
                     listener.onDeleteFavClick(meal);
                 }
             });
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onFavMealClick(meal.getMealId());
+                }
+            });
+
 
         }
 

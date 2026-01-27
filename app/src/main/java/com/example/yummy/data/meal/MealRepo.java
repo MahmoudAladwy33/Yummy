@@ -40,4 +40,8 @@ public class MealRepo {
     public void deleteFavMeal(MealRoom mealRoom) {
         mealsLocalDataSource.deleteFavMeal(mealRoom);
     }
+
+    public void getMealById(String id, MealsNetworkResponse mealsNetworkResponse) {
+        mealsRemoteDataSource.getMealById(id, mealsNetworkResponse);
+    }
 }
