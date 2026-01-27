@@ -6,9 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.yummy.data.meal.model.MealRoom;
+import com.example.yummy.data.meal.model.FavMealRoom;
+import com.example.yummy.data.meal.model.PlannedMealRoom;
 
-@Database(entities = {MealRoom.class}, version = 1)
+@Database(entities = {FavMealRoom.class, PlannedMealRoom.class}, version = 2)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase instance = null;

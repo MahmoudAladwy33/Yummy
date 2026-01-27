@@ -18,7 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.yummy.R;
-import com.example.yummy.data.meal.model.MealRoom;
+import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.ui.home.fav.presenter.FavMealsPresenter;
 import com.example.yummy.ui.home.fav.presenter.FavMealsPresenterImp;
 
@@ -62,17 +62,17 @@ public class FavouriteMealsFragment extends Fragment implements FavMealsViews, O
         rvFavMeals.setAdapter(adapter);
         presenter = new FavMealsPresenterImp(getContext(), this);
         progressBar.setVisibility(VISIBLE);
-        presenter.loadFavMeals().observe(getViewLifecycleOwner(), new Observer<List<MealRoom>>() {
+        presenter.loadFavMeals().observe(getViewLifecycleOwner(), new Observer<List<FavMealRoom>>() {
             @Override
-            public void onChanged(List<MealRoom> mealRooms) {
+            public void onChanged(List<FavMealRoom> favMealRooms) {
                 progressBar.setVisibility(View.GONE);
-                if (mealRooms == null || mealRooms.isEmpty()) {
+                if (favMealRooms == null || favMealRooms.isEmpty()) {
                     tvEmptyFav.setVisibility(View.VISIBLE);
                     rvFavMeals.setVisibility(View.GONE);
                 } else {
                     tvEmptyFav.setVisibility(View.GONE);
                     rvFavMeals.setVisibility(View.VISIBLE);
-                    adapter.setFavMeals(mealRooms);
+                    adapter.setFavMeals(favMealRooms);
                 }
             }
         });
@@ -86,7 +86,7 @@ public class FavouriteMealsFragment extends Fragment implements FavMealsViews, O
     }
 
     @Override
-    public void onDeleteFavClick(MealRoom meal) {
+    public void onDeleteFavClick(FavMealRoom meal) {
         presenter.deleteFavMeal(meal);
 
     }

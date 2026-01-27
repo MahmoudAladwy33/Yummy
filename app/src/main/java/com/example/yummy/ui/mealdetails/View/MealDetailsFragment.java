@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.yummy.R;
+import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.IngredientItem;
 import com.example.yummy.data.meal.model.Meal;
-import com.example.yummy.data.meal.model.MealRoom;
 import com.example.yummy.ui.home.HomeActivity;
 import com.example.yummy.ui.mealdetails.presenter.MealDetailsPresenter;
 import com.example.yummy.ui.mealdetails.presenter.MealDetailsPresenterImp;
@@ -116,11 +116,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
             @Override
             public void onClick(View view) {
                 if (meal == null) return;
-                MealRoom mealRoom = new MealRoom(meal);
+                FavMealRoom favMealRoom = new FavMealRoom(meal);
                 if (!isFavorite) {
-                    mealDetailsPresenter.addMealToFavorites(mealRoom);
+                    mealDetailsPresenter.addMealToFavorites(favMealRoom);
                 } else {
-                    mealDetailsPresenter.removeMealFromFavorites(mealRoom);
+                    mealDetailsPresenter.removeMealFromFavorites(favMealRoom);
                 }
             }
         });

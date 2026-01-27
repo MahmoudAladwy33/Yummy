@@ -2,12 +2,12 @@ package com.example.yummy.ui.home.fav.presenter;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.yummy.data.meal.model.MealRoom;
+import com.example.yummy.data.meal.model.FavMealRoom;
 
 import java.util.List;
 
 public interface FavMealsPresenter {
-    LiveData<List<MealRoom>> loadFavMeals();
+    LiveData<List<FavMealRoom>> loadFavMeals();
 
-    void deleteFavMeal(MealRoom mealRoom);
+    void deleteFavMeal(FavMealRoom favMealRoom);
 }

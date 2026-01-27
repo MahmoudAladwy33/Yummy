@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.data.meal.datasource.remote.MealsNetworkResponse;
+import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.IngredientItem;
 import com.example.yummy.data.meal.model.Meal;
-import com.example.yummy.data.meal.model.MealRoom;
 import com.example.yummy.ui.mealdetails.View.MealDetailsViews;
 
 import java.util.ArrayList;
@@ -38,13 +38,13 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
     }
 
     @Override
-    public void addMealToFavorites(MealRoom meal) {
+    public void addMealToFavorites(FavMealRoom meal) {
         mealRepo.insertFavMeal(meal);
         mealDetailsViews.addToFavSuccess();
     }
 
     @Override
-    public void removeMealFromFavorites(MealRoom meal) {
+    public void removeMealFromFavorites(FavMealRoom meal) {
         mealRepo.deleteFavMeal(meal);
         mealDetailsViews.removeFromFavSuccess();
 

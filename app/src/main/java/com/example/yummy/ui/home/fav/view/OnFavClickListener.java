@@ -1,9 +1,9 @@
 package com.example.yummy.ui.home.fav.view;
 
-import com.example.yummy.data.meal.model.MealRoom;
+import com.example.yummy.data.meal.model.FavMealRoom;
 
 public interface OnFavClickListener {
-    void onDeleteFavClick(MealRoom meal);
+    void onDeleteFavClick(FavMealRoom meal);
 
     void onFavMealClick(String mealId);
 }
