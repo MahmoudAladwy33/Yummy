@@ -1,5 +1,7 @@
 package com.example.yummy.Network;
 
+import com.example.yummy.data.meal.datasource.remote.MealService;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

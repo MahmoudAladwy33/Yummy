@@ -131,25 +131,6 @@ public class Meal implements Parcelable {
     @SerializedName("dateModified")
     private String dateModified;
 
-    public Meal(String mealImg) {
-        this.mealImg = mealImg;
-    }
-
-    public Meal(String mealId, String mealName, String category, String area, String instructions, String youtubeUrl, String mealImg, String ingredient1, String ingredient2, String ingredient3, String measure1, String measure2, String measure3) {
-        this.mealId = mealId;
-        this.mealName = mealName;
-        this.category = category;
-        this.area = area;
-        this.instructions = instructions;
-        this.youtubeUrl = youtubeUrl;
-        this.mealImg = mealImg;
-        this.ingredient1 = ingredient1;
-        this.ingredient2 = ingredient2;
-        this.ingredient3 = ingredient3;
-        this.measure1 = measure1;
-        this.measure2 = measure2;
-        this.measure3 = measure3;
-    }
 
     public Meal(String mealId, String mealName, String mealAlternate, String category, String area, String instructions, String mealImg, String tags, String youtubeUrl, String ingredient1, String ingredient2, String ingredient3, String ingredient4, String ingredient5, String ingredient6, String ingredient7, String ingredient8, String ingredient9, String ingredient10, String ingredient11, String ingredient12, String ingredient13, String ingredient14, String ingredient15, String ingredient16, String ingredient17, String ingredient18, String ingredient19, String ingredient20, String measure1, String measure2, String measure3, String measure4, String measure5, String measure6, String measure7, String measure8, String measure9, String measure10, String measure11, String measure12, String measure13, String measure14, String measure15, String measure16, String measure17, String measure18, String measure19, String measure20, String sourceUrl, String imageSource, String creativeCommons, String dateModified) {
         this.mealId = mealId;

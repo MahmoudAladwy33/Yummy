@@ -80,15 +80,17 @@
                         android:orientation="horizontal"
                         android:spacing="8dp">
 
-                        <ImageView
-                            android:id="@+id/imgFavorite"
+                        <ImageButton
+                            android:id="@+id/btnAddToFav"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
+                            android:layout_marginStart="8dp"
                             android:background="@drawable/circle_bg"
                             android:clickable="true"
                             android:focusable="true"
                             android:padding="8dp"
                             android:src="@drawable/ic_details_fav_unfill" />
+                        />
 
                         <ImageButton
                             android:id="@+id/btnCalendar"

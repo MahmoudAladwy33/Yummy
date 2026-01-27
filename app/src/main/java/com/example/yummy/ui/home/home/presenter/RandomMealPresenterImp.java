@@ -2,7 +2,7 @@ package com.example.yummy.ui.home.home.presenter;
 
 import android.content.Context;
 
-import com.example.yummy.data.meal.datasource.remote.MealRepo;
+import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.data.meal.datasource.remote.MealsNetworkResponse;
 import com.example.yummy.data.meal.model.Meal;
 import com.example.yummy.ui.home.home.view.RandomMealViews;
