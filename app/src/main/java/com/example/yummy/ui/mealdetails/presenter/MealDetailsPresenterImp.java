@@ -52,14 +52,17 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
 
     @Override
     public void getMealById(String id) {
+        mealDetailsViews.showLoading();
         mealRepo.getMealById(id, new MealsNetworkResponse() {
             @Override
             public void onSuccess(List<Meal> mealList) {
+                mealDetailsViews.hideLoading();
                 mealDetailsViews.showMealById(mealList.get(0));
             }
 
             @Override
             public void onError(String errorMessage) {
+                mealDetailsViews.hideLoading();
                 mealDetailsViews.showError(errorMessage);
             }
         });

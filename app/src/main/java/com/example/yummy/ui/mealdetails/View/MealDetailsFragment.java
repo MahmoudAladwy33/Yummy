@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     IngredientsAdapter adapter;
     List<IngredientItem> ingredients;
     MealDetailsPresenter mealDetailsPresenter;
+
+    ProgressBar progress_meal_details;
     Meal meal;
 
     ImageButton btn_add_to_fav;
@@ -73,6 +76,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
         youtubePlayerView = view.findViewById(R.id.youtubePlayerView);
         rvIngredients = view.findViewById(R.id.rvIngredients);
         btn_add_to_fav = view.findViewById(R.id.btnAddToFav);
+        progress_meal_details = view.findViewById(R.id.progress_meal_details);
         adapter = new IngredientsAdapter();
         getLifecycle().addObserver(youtubePlayerView);
         ((HomeActivity) requireActivity()).findViewById(R.id.bottom_nav_view).setVisibility(View.GONE);
@@ -172,5 +176,17 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     @Override
     public void showError(String errorMessage) {
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoading() {
+        progress_meal_details.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideLoading() {
+        progress_meal_details.setVisibility(View.GONE);
+
     }
 }
