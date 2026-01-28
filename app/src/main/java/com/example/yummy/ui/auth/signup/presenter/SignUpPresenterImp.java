@@ -35,6 +35,7 @@ public class SignUpPresenterImp implements SignUpPresenter {
             public void onSuccess(FirebaseUser user) {
                 view.hideLoading();
                 view.showMessage("Sign up Success");
+                view.navigateToHome();
             }
 
             @Override

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.yummy.R;
+import com.example.yummy.ui.auth.AuthActivity;
 import com.example.yummy.ui.home.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,20 +30,26 @@ public class AppSplash extends AppCompatActivity {
                 .setDuration(1900)
                 .setStartDelay(500)
                 .start();
-
-        lottie.addAnimatorListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                startActivity(new Intent(AppSplash.this, HomeActivity.class));
-                finish();
-            }
-        });
+        
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            // User logged in → انتقل للـ Home / MainActivity
+            lottie.addAnimatorListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    startActivity(new Intent(AppSplash.this, HomeActivity.class));
+                    finish();
+                }
+            });
+
         } else {
-            // User not logged in → انتقل للـ Auth screen
+            lottie.addAnimatorListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    startActivity(new Intent(AppSplash.this, AuthActivity.class));
+                    finish();
+                }
+            });
         }
 
     }

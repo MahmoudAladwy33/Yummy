@@ -1,5 +1,6 @@
 package com.example.yummy.ui.auth.signup.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.yummy.R;
 import com.example.yummy.data.auth.SignUpRepo;
 import com.example.yummy.ui.auth.signup.presenter.SignUpPresenter;
 import com.example.yummy.ui.auth.signup.presenter.SignUpPresenterImp;
+import com.example.yummy.ui.home.HomeActivity;
 
 public class sign_up extends Fragment implements SignUpView {
 
@@ -29,6 +31,7 @@ public class sign_up extends Fragment implements SignUpView {
     Button btn_sign_up;
     SignUpPresenter presenter;
     ProgressBar progressBar;
+
     public sign_up() {
         // Required empty public constructor
     }
@@ -92,5 +95,13 @@ public class sign_up extends Fragment implements SignUpView {
     public void hideLoading() {
         progressBar.setVisibility(View.GONE);
         btn_sign_up.setEnabled(true);
+    }
+
+    @Override
+    public void navigateToHome() {
+        Intent intent = new Intent(requireContext(), HomeActivity.class);
+        startActivity(intent);
+        requireActivity().finish();
+
     }
 }

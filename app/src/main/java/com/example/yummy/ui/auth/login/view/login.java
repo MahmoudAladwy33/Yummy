@@ -19,11 +19,12 @@ import androidx.navigation.Navigation;
 import com.example.yummy.R;
 import com.example.yummy.data.auth.LoginRepo;
 import com.example.yummy.data.auth.datasource.GoogleSignRepo;
-import com.example.yummy.ui.auth.GoogleView;
+import com.example.yummy.ui.auth.Google.presenter.GooglePresenter;
+import com.example.yummy.ui.auth.Google.presenter.GooglePresenterImp;
+import com.example.yummy.ui.auth.Google.view.GoogleView;
 import com.example.yummy.ui.auth.login.presenter.LoginPresenter;
 import com.example.yummy.ui.auth.login.presenter.LoginPresenterImp;
-import com.example.yummy.ui.auth.presenter.GooglePresenter;
-import com.example.yummy.ui.auth.presenter.GooglePresenterImp;
+import com.example.yummy.ui.home.HomeActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -42,7 +43,7 @@ public class login extends Fragment implements LoginView, GoogleView {
     LoginPresenter presenter;
     GooglePresenter gPresenter;
     Button btn_google;
-    private GoogleSignInClient googleSignInClient; // Class-level variable
+    private GoogleSignInClient googleSignInClient;
 
     public login() {
     }
@@ -83,7 +84,7 @@ public class login extends Fragment implements LoginView, GoogleView {
             presenter.login(email, pass);
         });
 
-        // Initialize GoogleSignInClient
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -97,7 +98,7 @@ public class login extends Fragment implements LoginView, GoogleView {
         });
     }
 
-    // Handle Google Sign-In result
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -131,6 +132,13 @@ public class login extends Fragment implements LoginView, GoogleView {
         progressBar.setVisibility(View.GONE);
         btn_login.setEnabled(true);
         btn_login.setText(getString(R.string.btn_login));
+    }
+
+    @Override
+    public void navigateToHome() {
+        Intent intent = new Intent(requireContext(), HomeActivity.class);
+        startActivity(intent);
+        requireActivity().finish();
     }
 
     @Override

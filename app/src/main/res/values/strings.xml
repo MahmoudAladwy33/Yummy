@@ -51,4 +51,5 @@
     <string name="tvCalendarMealName">CalendarMealName\n</string>
     <string name="tvCalendarMealDate">CalendarMealDate</string>
     <string name="tvCalendarMealCountry">CalendarMealCountry</string>
+    <string name="continue_as_guest">Continue as guest</string>
 </resources>
