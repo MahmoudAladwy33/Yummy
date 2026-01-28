@@ -4,7 +4,8 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.yummy.data.meal.model.MealRoom;
+import com.example.yummy.data.meal.model.FavMealRoom;
+import com.example.yummy.data.meal.model.PlannedMealRoom;
 import com.example.yummy.db.AppDataBase;
 import com.example.yummy.db.MealsDao;
 
@@ -20,7 +21,7 @@ public class MealsLocalDataSource {
     }
 
 
-    public void insertFavMeal(MealRoom meal) {
+    public void insertFavMeal(FavMealRoom meal) {
 
         new Thread(new Runnable() {
             @Override
@@ -31,7 +32,7 @@ public class MealsLocalDataSource {
 
     }
 
-    public void deleteFavMeal(MealRoom meal) {
+    public void deleteFavMeal(FavMealRoom meal) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -41,8 +42,33 @@ public class MealsLocalDataSource {
     }
 
 
-    public LiveData<List<MealRoom>> getFavMeals() {
+    public LiveData<List<FavMealRoom>> getFavMeals() {
         return mealsDao.getFavMeals();
+    }
+
+
+    public void insertPlannedMeal(PlannedMealRoom meal) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mealsDao.insertPlannedMeal(meal);
+            }
+        }).start();
+
+    }
+
+    public LiveData<List<PlannedMealRoom>> getPlannedMeals() {
+        return mealsDao.getPlannedMeals();
+    }
+
+    public void deletePlannedMeal(PlannedMealRoom meal) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mealsDao.deletePlannedMeal(meal);
+            }
+        }).start();
     }
 
 }

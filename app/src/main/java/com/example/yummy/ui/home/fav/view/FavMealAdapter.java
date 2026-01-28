@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.yummy.R;
-import com.example.yummy.data.meal.model.MealRoom;
+import com.example.yummy.data.meal.model.FavMealRoom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.FavViewH
 
 
     private OnFavClickListener listener;
-    private List<MealRoom> favMeals;
+    private List<FavMealRoom> favMeals;
 
 
     public FavMealAdapter(OnFavClickListener listener) {
@@ -30,7 +30,7 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.FavViewH
 
     }
 
-    public void setFavMeals(List<MealRoom> meals) {
+    public void setFavMeals(List<FavMealRoom> meals) {
         this.favMeals = meals;
         notifyDataSetChanged();
     }
@@ -45,7 +45,7 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.FavViewH
 
     @Override
     public void onBindViewHolder(@NonNull FavViewHolder holder, int position) {
-        MealRoom meal = favMeals.get(position);
+        FavMealRoom meal = favMeals.get(position);
         holder.bind(meal);
     }
 
@@ -70,7 +70,7 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.FavViewH
 
         }
 
-        public void bind(MealRoom meal) {
+        public void bind(FavMealRoom meal) {
             tvName.setText(meal.getMealName());
             tvCountry.setText(meal.getArea());
 

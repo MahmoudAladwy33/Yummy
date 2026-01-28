@@ -46,4 +46,9 @@
     <string name="tvFavMealCountry">Egypt</string>
     <string name="no_favorite_meals_yet">No favorite meals yet 🍽️</string>
     <string name="favorite_meals">Favorite Meals</string>
+    <string name="planned_meals">Planned Meals</string>
+    <string name="no_planned_meals_yet">NO planned meals yet🍽️</string>
+    <string name="tvCalendarMealName">CalendarMealName\n</string>
+    <string name="tvCalendarMealDate">CalendarMealDate</string>
+    <string name="tvCalendarMealCountry">CalendarMealCountry</string>
 </resources>

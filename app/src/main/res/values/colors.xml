@@ -5,5 +5,6 @@
     <color name="gray">#b8b6b4</color>
     <color name="MainColor_darker">#045e31</color>
     <color name="MainColor">#058444</color>
+    <color name="offWhite">#E0E0E0</color>
 
 </resources>

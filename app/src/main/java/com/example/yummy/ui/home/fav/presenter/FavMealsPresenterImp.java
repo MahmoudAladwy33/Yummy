@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.example.yummy.data.meal.MealRepo;
-import com.example.yummy.data.meal.model.MealRoom;
+import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.ui.home.fav.view.FavMealsViews;
 
 import java.util.List;
@@ -21,15 +21,14 @@ public class FavMealsPresenterImp implements FavMealsPresenter {
     }
 
     @Override
-    public LiveData<List<MealRoom>> loadFavMeals() {
-
+    public LiveData<List<FavMealRoom>> loadFavMeals() {
         return mealRepo.getFavMeals();
 
     }
 
     @Override
-    public void deleteFavMeal(MealRoom mealRoom) {
-        mealRepo.deleteFavMeal(mealRoom);
+    public void deleteFavMeal(FavMealRoom favMealRoom) {
+        mealRepo.deleteFavMeal(favMealRoom);
         favMealsViews.deleteFavMealSuccess();
     }
 }

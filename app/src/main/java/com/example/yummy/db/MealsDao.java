@@ -7,7 +7,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.yummy.data.meal.model.MealRoom;
+import com.example.yummy.data.meal.model.FavMealRoom;
+import com.example.yummy.data.meal.model.PlannedMealRoom;
 
 import java.util.List;
 
@@ -15,11 +16,20 @@ import java.util.List;
 public interface MealsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertFavMeal(MealRoom meal);
+    void insertFavMeal(FavMealRoom meal);
 
-    @Query("SELECT * FROM meals")
-    LiveData<List<MealRoom>> getFavMeals();
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertPlannedMeal(PlannedMealRoom meal);
+
+    @Query("SELECT * FROM Fav_meals")
+    LiveData<List<FavMealRoom>> getFavMeals();
+
+    @Query("SELECT * FROM planned_meals")
+    LiveData<List<PlannedMealRoom>> getPlannedMeals();
 
     @Delete
-    void deleteFavMeal(MealRoom meal);
+    void deleteFavMeal(FavMealRoom meal);
+
+    @Delete
+    void deletePlannedMeal(PlannedMealRoom meal);
 }

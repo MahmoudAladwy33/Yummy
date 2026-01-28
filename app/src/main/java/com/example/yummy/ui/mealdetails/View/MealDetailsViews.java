@@ -11,4 +11,11 @@ public interface MealDetailsViews {
 
     void showError(String errorMessage);
 
+    void showLoading();
+
+    void hideLoading();
+
+    void addToCalendarSuccess(String displayDate);
+
+
 }
