@@ -6,14 +6,14 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class GoogleSignDataSource {
 
-   private FirebaseAuth auth ;
+    private FirebaseAuth auth;
 
     public GoogleSignDataSource() {
-         auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
 
-    public void signWithGoogle(String idToken , GoogleSignResponse callback){
+    public void signWithGoogle(String idToken, GoogleSignResponse callback) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
@@ -25,5 +25,5 @@ public class GoogleSignDataSource {
                 });
     }
 
-    }
+}
 

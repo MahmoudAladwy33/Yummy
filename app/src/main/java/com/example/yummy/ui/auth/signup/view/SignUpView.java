@@ -6,4 +6,6 @@ public interface SignUpView {
     void showLoading();
 
     void hideLoading();
+
+    void navigateToHome();
 }

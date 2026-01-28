@@ -19,8 +19,36 @@ public class LoginPresenterImp implements LoginPresenter {
 
     @Override
     public void login(String email, String password) {
+        email = email.trim();
+        password = password.trim();
+
+
         if (email.isEmpty() || password.isEmpty()) {
             view.showMessage("Please fill all fields");
+            return;
+        }
+
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            view.showMessage("Please enter a valid email");
+            return;
+        }
+
+
+        if (password.length() < 6) {
+            view.showMessage("Password must be at least 6 characters");
+            return;
+        }
+
+
+        if (password.contains(" ")) {
+            view.showMessage("Password cannot contain spaces");
+            return;
+        }
+
+
+        if (email.contains(" ")) {
+            view.showMessage("Email cannot contain spaces");
             return;
         }
         view.showLoading();
@@ -30,6 +58,7 @@ public class LoginPresenterImp implements LoginPresenter {
             public void onSuccess(FirebaseUser user) {
                 view.hideLoading();
                 view.showMessage("Login Success");
+                view.navigateToHome();
             }
 
             @Override
