@@ -61,6 +61,7 @@ public class LoginPresenterImp implements LoginPresenter {
         loginRepo.login(email, password, new LoginResponse() {
             @Override
             public void onSuccess(FirebaseUser user) {
+                sessionManager.setGuest(false);
                 view.hideLoading();
                 view.showMessage("Login Success");
                 view.navigateToHome();

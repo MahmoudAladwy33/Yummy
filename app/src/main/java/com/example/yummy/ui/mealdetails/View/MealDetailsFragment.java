@@ -2,9 +2,13 @@ package com.example.yummy.ui.mealdetails.View;
 
 import static android.view.View.GONE;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.example.yummy.R;
 import com.example.yummy.data.meal.model.IngredientItem;
 import com.example.yummy.data.meal.model.Meal;
+import com.example.yummy.ui.auth.AuthActivity;
 import com.example.yummy.ui.home.HomeActivity;
 import com.example.yummy.ui.mealdetails.presenter.MealDetailsPresenter;
 import com.example.yummy.ui.mealdetails.presenter.MealDetailsPresenterImp;
@@ -47,7 +52,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     IngredientsAdapter adapter;
     List<IngredientItem> ingredients;
     MealDetailsPresenter mealDetailsPresenter;
-
     ProgressBar progress_meal_details;
     Meal meal;
 
@@ -235,4 +239,42 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     public void addToCalendarSuccess(String displayDate) {
         Toast.makeText(requireContext(), "Selected: " + displayDate, Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void showLoginHint() {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle("Login Required")
+                .setMessage("You need to login to use this feature")
+                .setPositiveButton("Login", (dialogInterface, which) -> {
+                    Intent intent = new Intent(requireContext(), AuthActivity.class);
+                    startActivity(intent);
+                    requireActivity().finish();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(getResources().getColor(R.color.MainColor));
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                .setTextColor(getResources().getColor(R.color.red));
+
+
+        TextView title = dialog.findViewById(
+                requireContext().getResources().getIdentifier("alertTitle", "id", "android"));
+        if (title != null) {
+            title.setTextColor(getResources().getColor(R.color.black));
+            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            title.setTypeface(title.getTypeface(), Typeface.BOLD);
+        }
+
+
+        TextView message = dialog.findViewById(android.R.id.message);
+        if (message != null) {
+            message.setTextColor(getResources().getColor(R.color.gray_800));
+            message.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        }
+    }
+
+
 }

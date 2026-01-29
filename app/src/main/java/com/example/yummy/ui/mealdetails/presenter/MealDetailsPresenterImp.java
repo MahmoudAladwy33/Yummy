@@ -9,6 +9,7 @@ import com.example.yummy.data.meal.model.IngredientItem;
 import com.example.yummy.data.meal.model.Meal;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 import com.example.yummy.ui.mealdetails.View.MealDetailsViews;
+import com.example.yummy.utils.GuestGuard;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,9 +21,13 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
     MealDetailsViews mealDetailsViews;
     private MealRepo mealRepo;
 
+    private GuestGuard guestGuard;
+
     public MealDetailsPresenterImp(Context context, MealDetailsViews mealDetailsViews) {
         this.mealRepo = new MealRepo(context);
         this.mealDetailsViews = mealDetailsViews;
+        this.guestGuard = new GuestGuard(context);
+
     }
 
     @Override
@@ -42,9 +47,19 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
 
     @Override
     public void addMealToFavorites(Meal meal) {
-        FavMealRoom favMealRoom = new FavMealRoom(meal);
-        mealRepo.insertFavMeal(favMealRoom);
-        mealDetailsViews.addToFavSuccess();
+
+        guestGuard.runIfNotGuest(
+
+                () -> {
+                    FavMealRoom favMealRoom = new FavMealRoom(meal);
+                    mealRepo.insertFavMeal(favMealRoom);
+                    mealDetailsViews.addToFavSuccess();
+                },
+                () -> mealDetailsViews.showLoginHint()
+
+        );
+
+
     }
 
     @Override
@@ -75,18 +90,28 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
 
     @Override
     public void addMealToCalendar(Meal meal, int year, int month, int day, int hour, int minute) {
-        Calendar selectedDateTime = Calendar.getInstance();
-        selectedDateTime.set(year, month, day, hour, minute, 0);
-        selectedDateTime.set(Calendar.MILLISECOND, 0);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, EEEE HH:mm");
-        String displayDate = sdf.format(selectedDateTime.getTime());
+        guestGuard.runIfNotGuest(
 
-        PlannedMealRoom plannedMealRoom = new PlannedMealRoom(meal);
-        plannedMealRoom.setPlannedDate(displayDate);
+                () -> {
+                    Calendar selectedDateTime = Calendar.getInstance();
+                    selectedDateTime.set(year, month, day, hour, minute, 0);
+                    selectedDateTime.set(Calendar.MILLISECOND, 0);
 
-        mealRepo.insertPlannedMeal(plannedMealRoom);
-        mealDetailsViews.addToCalendarSuccess(displayDate);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, EEEE HH:mm");
+                    String displayDate = sdf.format(selectedDateTime.getTime());
+
+                    PlannedMealRoom plannedMealRoom = new PlannedMealRoom(meal);
+                    plannedMealRoom.setPlannedDate(displayDate);
+
+                    mealRepo.insertPlannedMeal(plannedMealRoom);
+                    mealDetailsViews.addToCalendarSuccess(displayDate);
+                },
+                () -> mealDetailsViews.showLoginHint()
+
+        );
+
+
     }
 
 
