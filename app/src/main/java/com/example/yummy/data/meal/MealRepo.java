@@ -5,8 +5,11 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.example.yummy.data.meal.datasource.local.MealsLocalDataSource;
+import com.example.yummy.data.meal.datasource.remote.FirestoreDataSource;
 import com.example.yummy.data.meal.datasource.remote.MealsNetworkResponse;
 import com.example.yummy.data.meal.datasource.remote.MealsRemoteDataSource;
+import com.example.yummy.data.meal.datasource.remote.OnCompleteFirestoreListener;
+import com.example.yummy.data.meal.datasource.remote.OnMealsFetchedFirestore;
 import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 
@@ -17,9 +20,12 @@ public class MealRepo {
     private MealsRemoteDataSource mealsRemoteDataSource;
     private MealsLocalDataSource mealsLocalDataSource;
 
+    private FirestoreDataSource firestoreDataSource;
+
     public MealRepo(Context context) {
         this.mealsRemoteDataSource = new MealsRemoteDataSource();
         this.mealsLocalDataSource = new MealsLocalDataSource(context);
+        this.firestoreDataSource = new FirestoreDataSource();
     }
 
 
@@ -32,14 +38,45 @@ public class MealRepo {
         return mealsLocalDataSource.getFavMeals();
     }
 
+
+    public void clearFavMeals() {
+        mealsLocalDataSource.clearAllTables();
+    }
+
+
     public void insertFavMeal(FavMealRoom favMealRoom) {
 
-        mealsLocalDataSource.insertFavMeal(favMealRoom);
+        firestoreDataSource.addToFavorites(favMealRoom, new OnCompleteFirestoreListener() {
+
+            @Override
+            public void onSuccess() {
+                mealsLocalDataSource.insertFavMeal(favMealRoom);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+
     }
 
 
     public void deleteFavMeal(FavMealRoom favMealRoom) {
-        mealsLocalDataSource.deleteFavMeal(favMealRoom);
+        firestoreDataSource.removeFromFavorites(favMealRoom.getMealId(), new OnCompleteFirestoreListener() {
+            @Override
+            public void onSuccess() {
+                mealsLocalDataSource.deleteFavMeal(favMealRoom);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+
     }
 
     public void getMealById(String id, MealsNetworkResponse mealsNetworkResponse) {
@@ -49,15 +86,61 @@ public class MealRepo {
 
     public void insertPlannedMeal(PlannedMealRoom meal) {
 
-        mealsLocalDataSource.insertPlannedMeal(meal);
+        firestoreDataSource.addToPlanned(meal, new OnCompleteFirestoreListener() {
+            @Override
+            public void onSuccess() {
+                mealsLocalDataSource.insertPlannedMeal(meal);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+
     }
 
     public LiveData<List<PlannedMealRoom>> getPlanbedMeals() {
 
         return mealsLocalDataSource.getPlannedMeals();
+
     }
 
     public void deletePlannedMeal(PlannedMealRoom meal) {
-        mealsLocalDataSource.deletePlannedMeal(meal);
+        firestoreDataSource.removeFromPlanned(meal.getMealId(), new OnCompleteFirestoreListener() {
+            @Override
+            public void onSuccess() {
+                mealsLocalDataSource.deletePlannedMeal(meal);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+
     }
+
+    public void syncFromFirestore() {
+        firestoreDataSource.getFavorites(new OnMealsFetchedFirestore() {
+            @Override
+            public void onFavSuccess(List<FavMealRoom> mealList) {
+                for (FavMealRoom meal : mealList) {
+                    mealsLocalDataSource.insertFavMeal(meal);
+                }
+            }
+
+            @Override
+            public void onPlannedSuccess(List<PlannedMealRoom> mealList) {
+                for (PlannedMealRoom meal : mealList) {
+                    mealsLocalDataSource.insertPlannedMeal(meal);
+                }
+            }
+        });
+
+
+    }
+
 }

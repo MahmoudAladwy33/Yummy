@@ -23,4 +23,7 @@ public interface PlannedMealsDao {
 
     @Delete
     void deletePlannedMeal(PlannedMealRoom meal);
+
+    @Query("DELETE FROM Planned_meals")
+    void clearPlannedMeals();
 }

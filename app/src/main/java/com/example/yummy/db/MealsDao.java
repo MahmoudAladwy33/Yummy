@@ -26,4 +26,6 @@ public interface MealsDao {
     void deleteFavMeal(FavMealRoom meal);
 
 
+    @Query("DELETE FROM Fav_meals")
+    void clearFavMeals();
 }
