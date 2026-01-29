@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_home);
         NavController navController = navHostFragment.getNavController();
-
+    
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
