@@ -65,7 +65,8 @@ public class LoginPresenterImp implements LoginPresenter {
         loginRepo.login(email, password, new LoginResponse() {
             @Override
             public void onSuccess(FirebaseUser user) {
-                mealRepo.syncFromFirestore();
+                mealRepo.syncFavFromFirestore();
+                mealRepo.syncPlanedFromFirestore();
                 sessionManager.setGuest(false);
                 view.hideLoading();
                 view.showMessage("Login Success");

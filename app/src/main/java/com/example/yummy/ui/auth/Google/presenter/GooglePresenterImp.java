@@ -32,7 +32,8 @@ public class GooglePresenterImp implements GooglePresenter {
             @Override
             public void onSuccess(FirebaseUser user) {
                 sessionManager.setGuest(false);
-                mealRepo.syncFromFirestore();
+                mealRepo.syncFavFromFirestore();
+                mealRepo.syncPlanedFromFirestore();
                 view.hideLoading();
                 view.onGoogleSignInSuccess(user);
                 view.navigateToHome();

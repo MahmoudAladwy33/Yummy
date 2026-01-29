@@ -45,7 +45,7 @@ public class FirestoreDataSource {
                 .addOnFailureListener(listener::onFailure);
     }
 
-    public void getFavorites(OnMealsFetchedFirestore callback) {
+    public void getFavorites(OnFavMealsFetchedFirestore callback) {
         firestore
                 .collection("users")
                 .document(getUserId())
@@ -82,7 +82,7 @@ public class FirestoreDataSource {
     }
 
 
-    public void getPlanned(OnMealsFetchedFirestore callback) {
+    public void getPlanned(OnPlannedMealsFetchedFirestore callback) {
         firestore
                 .collection("users")
                 .document(getUserId())
