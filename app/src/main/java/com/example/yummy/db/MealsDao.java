@@ -18,7 +18,7 @@ public interface MealsDao {
     void insertFavMeal(FavMealRoom meal);
 
 
-    @Query("SELECT * FROM Fav_meals")
+    @Query("SELECT * FROM Fav_meals ORDER BY mealId ASC")
     LiveData<List<FavMealRoom>> getFavMeals();
 
 

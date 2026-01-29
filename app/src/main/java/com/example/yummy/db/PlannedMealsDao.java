@@ -18,7 +18,7 @@ public interface PlannedMealsDao {
     void insertPlannedMeal(PlannedMealRoom meal);
 
 
-    @Query("SELECT * FROM planned_meals")
+    @Query("SELECT * FROM planned_meals ORDER BY mealId ASC")
     LiveData<List<PlannedMealRoom>> getPlannedMeals();
 
     @Delete

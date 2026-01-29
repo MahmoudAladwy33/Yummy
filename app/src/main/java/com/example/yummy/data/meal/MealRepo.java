@@ -9,7 +9,8 @@ import com.example.yummy.data.meal.datasource.remote.FirestoreDataSource;
 import com.example.yummy.data.meal.datasource.remote.MealsNetworkResponse;
 import com.example.yummy.data.meal.datasource.remote.MealsRemoteDataSource;
 import com.example.yummy.data.meal.datasource.remote.OnCompleteFirestoreListener;
-import com.example.yummy.data.meal.datasource.remote.OnMealsFetchedFirestore;
+import com.example.yummy.data.meal.datasource.remote.OnFavMealsFetchedFirestore;
+import com.example.yummy.data.meal.datasource.remote.OnPlannedMealsFetchedFirestore;
 import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 
@@ -123,8 +124,8 @@ public class MealRepo {
 
     }
 
-    public void syncFromFirestore() {
-        firestoreDataSource.getFavorites(new OnMealsFetchedFirestore() {
+    public void syncFavFromFirestore() {
+        firestoreDataSource.getFavorites(new OnFavMealsFetchedFirestore() {
             @Override
             public void onFavSuccess(List<FavMealRoom> mealList) {
                 for (FavMealRoom meal : mealList) {
@@ -132,6 +133,11 @@ public class MealRepo {
                 }
             }
 
+        });
+    }
+
+    public void syncPlanedFromFirestore() {
+        firestoreDataSource.getPlanned(new OnPlannedMealsFetchedFirestore() {
             @Override
             public void onPlannedSuccess(List<PlannedMealRoom> mealList) {
                 for (PlannedMealRoom meal : mealList) {
@@ -139,7 +145,6 @@ public class MealRepo {
                 }
             }
         });
-
 
     }
 
