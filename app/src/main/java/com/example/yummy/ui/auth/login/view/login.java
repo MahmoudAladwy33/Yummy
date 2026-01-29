@@ -39,6 +39,7 @@ public class login extends Fragment implements LoginView, GoogleView {
     EditText et_email;
     EditText et_pass;
     Button btn_login;
+    Button btn_guest;
     ProgressBar progressBar;
     LoginPresenter presenter;
     GooglePresenter gPresenter;
@@ -51,8 +52,8 @@ public class login extends Fragment implements LoginView, GoogleView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new LoginPresenterImp(new LoginRepo(getContext()), this);
-        gPresenter = new GooglePresenterImp(this, new GoogleSignRepo(getContext()));
+        presenter = new LoginPresenterImp(new LoginRepo(getContext()), this, requireContext());
+        gPresenter = new GooglePresenterImp(this, new GoogleSignRepo(getContext()), requireContext());
     }
 
     @Override
@@ -70,6 +71,7 @@ public class login extends Fragment implements LoginView, GoogleView {
         et_pass = view.findViewById(R.id.et_password);
         btn_login = view.findViewById(R.id.btn_login);
         btn_google = view.findViewById(R.id.btn_google);
+        btn_guest = view.findViewById(R.id.btn_guest);
         progressBar = view.findViewById(R.id.progress_login);
 
         tv_signup.setOnClickListener(v ->
@@ -82,6 +84,11 @@ public class login extends Fragment implements LoginView, GoogleView {
             String pass = et_pass.getText().toString().trim();
 
             presenter.login(email, pass);
+        });
+
+
+        btn_guest.setOnClickListener(v -> {
+            presenter.loginAsGuest();
         });
 
 

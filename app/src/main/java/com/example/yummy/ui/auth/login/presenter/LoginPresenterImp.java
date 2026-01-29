@@ -1,7 +1,10 @@
 package com.example.yummy.ui.auth.login.presenter;
 
+import android.content.Context;
+
 import com.example.yummy.data.auth.LoginRepo;
 import com.example.yummy.data.auth.datasource.remote.LoginResponse;
+import com.example.yummy.data.common.SessionManager;
 import com.example.yummy.ui.auth.login.view.LoginView;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -9,11 +12,13 @@ public class LoginPresenterImp implements LoginPresenter {
 
     private LoginRepo loginRepo;
     private LoginView view;
+    private SessionManager sessionManager;
 
 
-    public LoginPresenterImp(LoginRepo loginRepo, LoginView view) {
+    public LoginPresenterImp(LoginRepo loginRepo, LoginView view, Context context) {
         this.loginRepo = loginRepo;
         this.view = view;
+        this.sessionManager = SessionManager.getInstance(context);
 
     }
 
@@ -56,6 +61,7 @@ public class LoginPresenterImp implements LoginPresenter {
         loginRepo.login(email, password, new LoginResponse() {
             @Override
             public void onSuccess(FirebaseUser user) {
+                sessionManager.setGuest(false);
                 view.hideLoading();
                 view.showMessage("Login Success");
                 view.navigateToHome();
@@ -67,5 +73,12 @@ public class LoginPresenterImp implements LoginPresenter {
                 view.showMessage(error);
             }
         });
+    }
+
+    @Override
+    public void loginAsGuest() {
+        sessionManager.setGuest(true);
+        view.navigateToHome();
+
     }
 }

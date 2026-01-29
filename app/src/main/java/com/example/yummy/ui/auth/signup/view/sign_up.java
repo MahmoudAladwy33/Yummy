@@ -39,7 +39,7 @@ public class sign_up extends Fragment implements SignUpView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new SignUpPresenterImp(this, new SignUpRepo(getContext()));
+        presenter = new SignUpPresenterImp(this, new SignUpRepo(getContext()), requireContext());
 
     }
 

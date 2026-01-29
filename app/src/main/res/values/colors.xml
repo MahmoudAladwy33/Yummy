@@ -6,5 +6,8 @@
     <color name="MainColor_darker">#045e31</color>
     <color name="MainColor">#058444</color>
     <color name="offWhite">#E0E0E0</color>
+    <color name="red">#F44336</color>
+    <color name="gray_800">#424242</color>
+
 
 </resources>

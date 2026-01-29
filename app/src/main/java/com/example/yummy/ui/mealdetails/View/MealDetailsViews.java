@@ -17,5 +17,5 @@ public interface MealDetailsViews {
 
     void addToCalendarSuccess(String displayDate);
 
-
+    public void showLoginHint();
 }

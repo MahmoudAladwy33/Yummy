@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 
-@Database(entities = {FavMealRoom.class, PlannedMealRoom.class}, version = 2)
+@Database(entities = {FavMealRoom.class, PlannedMealRoom.class}, version = 3)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase instance = null;
@@ -21,10 +21,13 @@ public abstract class AppDataBase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext()
                             , AppDataBase.class
                             , "mealsdb")
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return instance;
     }
 
     public abstract MealsDao mealsDao();
+
+    public abstract PlannedMealsDao plannedMealsDao();
 }
