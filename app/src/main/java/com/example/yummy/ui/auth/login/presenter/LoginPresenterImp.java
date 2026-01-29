@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.yummy.data.auth.LoginRepo;
 import com.example.yummy.data.auth.datasource.remote.LoginResponse;
 import com.example.yummy.data.common.SessionManager;
+import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.ui.auth.login.view.LoginView;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -14,11 +15,14 @@ public class LoginPresenterImp implements LoginPresenter {
     private LoginView view;
     private SessionManager sessionManager;
 
+    private MealRepo mealRepo;
+
 
     public LoginPresenterImp(LoginRepo loginRepo, LoginView view, Context context) {
         this.loginRepo = loginRepo;
         this.view = view;
         this.sessionManager = SessionManager.getInstance(context);
+        this.mealRepo = new MealRepo(context);
 
     }
 
@@ -61,6 +65,7 @@ public class LoginPresenterImp implements LoginPresenter {
         loginRepo.login(email, password, new LoginResponse() {
             @Override
             public void onSuccess(FirebaseUser user) {
+                mealRepo.syncFromFirestore();
                 sessionManager.setGuest(false);
                 view.hideLoading();
                 view.showMessage("Login Success");

@@ -74,4 +74,10 @@ public class MealsLocalDataSource {
         }).start();
     }
 
+    public void clearAllTables() {
+        mealsDao.clearFavMeals();
+        plannedMealsDao.clearPlannedMeals();
+    }
+
+
 }
