@@ -38,7 +38,7 @@ public class SignUpPresenterImp implements SignUpPresenter {
         signUpRepo.signUp(email, password, new SignUpResponse() {
             @Override
             public void onSuccess(FirebaseUser user) {
-                sessionManager.setGuest(true);
+                sessionManager.setGuest(false);
                 view.hideLoading();
                 view.showMessage("Sign up Success");
                 view.navigateToHome();

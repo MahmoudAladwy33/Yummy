@@ -53,7 +53,7 @@ public class login extends Fragment implements LoginView, GoogleView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new LoginPresenterImp(new LoginRepo(getContext()), this, requireContext());
-        gPresenter = new GooglePresenterImp(this, new GoogleSignRepo(getContext()));
+        gPresenter = new GooglePresenterImp(this, new GoogleSignRepo(getContext()), requireContext());
     }
 
     @Override
