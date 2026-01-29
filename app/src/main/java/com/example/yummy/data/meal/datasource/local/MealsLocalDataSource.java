@@ -8,16 +8,19 @@ import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 import com.example.yummy.db.AppDataBase;
 import com.example.yummy.db.MealsDao;
+import com.example.yummy.db.PlannedMealsDao;
 
 import java.util.List;
 
 public class MealsLocalDataSource {
 
     private MealsDao mealsDao;
+    private PlannedMealsDao plannedMealsDao;
 
     public MealsLocalDataSource(Context context) {
         AppDataBase dataBase = AppDataBase.getInstance(context);
         mealsDao = dataBase.mealsDao();
+        plannedMealsDao = dataBase.plannedMealsDao();
     }
 
 
@@ -52,21 +55,21 @@ public class MealsLocalDataSource {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mealsDao.insertPlannedMeal(meal);
+                plannedMealsDao.insertPlannedMeal(meal);
             }
         }).start();
 
     }
 
     public LiveData<List<PlannedMealRoom>> getPlannedMeals() {
-        return mealsDao.getPlannedMeals();
+        return plannedMealsDao.getPlannedMeals();
     }
 
     public void deletePlannedMeal(PlannedMealRoom meal) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mealsDao.deletePlannedMeal(meal);
+                plannedMealsDao.deletePlannedMeal(meal);
             }
         }).start();
     }

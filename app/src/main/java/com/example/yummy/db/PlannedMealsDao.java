@@ -7,23 +7,20 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.yummy.data.meal.model.FavMealRoom;
+import com.example.yummy.data.meal.model.PlannedMealRoom;
 
 import java.util.List;
 
 @Dao
-public interface MealsDao {
+public interface PlannedMealsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertFavMeal(FavMealRoom meal);
+    void insertPlannedMeal(PlannedMealRoom meal);
 
 
-    @Query("SELECT * FROM Fav_meals")
-    LiveData<List<FavMealRoom>> getFavMeals();
-
+    @Query("SELECT * FROM planned_meals")
+    LiveData<List<PlannedMealRoom>> getPlannedMeals();
 
     @Delete
-    void deleteFavMeal(FavMealRoom meal);
-
-
+    void deletePlannedMeal(PlannedMealRoom meal);
 }
