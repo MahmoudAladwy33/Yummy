@@ -73,4 +73,9 @@ public class MealsRemoteDataSource {
         return mealService.searchMeals(ingredient, category, area);
     }
 
+    public Observable<FilterResponse> getFilter(String ingredient, String category, String area) {
+        return mealService.getFilter(ingredient, category, area);
+    }
+
+
 }

@@ -10,4 +10,7 @@ public interface SearchViews {
     void onSearchResultEmpty();
 
     void onSearchError(String errorMessage);
+
+    void onFilterSuggestionsReady(List<String> suggestions);
+
 }

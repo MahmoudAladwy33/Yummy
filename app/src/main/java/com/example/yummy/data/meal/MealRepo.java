@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.example.yummy.data.meal.datasource.local.MealsLocalDataSource;
+import com.example.yummy.data.meal.datasource.remote.FilterResponse;
 import com.example.yummy.data.meal.datasource.remote.FirestoreDataSource;
 import com.example.yummy.data.meal.datasource.remote.MealsNetworkResponse;
 import com.example.yummy.data.meal.datasource.remote.MealsRemoteDataSource;
@@ -156,5 +157,9 @@ public class MealRepo {
         return mealsRemoteDataSource.searchMeals(ingredient, category, area);
     }
 
+
+    public Observable<FilterResponse> getFilter(String ingredient, String category, String area) {
+        return mealsRemoteDataSource.getFilter(ingredient, category, area);
+    }
 
 }

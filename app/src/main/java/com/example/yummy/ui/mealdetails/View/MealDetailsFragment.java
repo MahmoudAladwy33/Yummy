@@ -90,7 +90,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
         progress_meal_details = view.findViewById(R.id.progress_meal_details);
         adapter = new IngredientsAdapter();
         getLifecycle().addObserver(youtubePlayerView);
-        ((HomeActivity) requireActivity()).findViewById(R.id.bottom_nav_view).setVisibility(GONE);
 
         rvIngredients.setLayoutManager(
                 new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)

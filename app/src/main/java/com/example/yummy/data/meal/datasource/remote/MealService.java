@@ -22,5 +22,12 @@ public interface MealService {
             @Query("c") String category,
             @Query("a") String area
     );
+
+    @GET("list.php")
+    Observable<FilterResponse> getFilter(
+            @Query("i") String ingredient,
+            @Query("c") String category,
+            @Query("a") String area
+    );
 }
 
