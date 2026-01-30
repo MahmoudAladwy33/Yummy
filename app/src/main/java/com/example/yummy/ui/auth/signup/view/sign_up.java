@@ -80,6 +80,12 @@ public class sign_up extends Fragment implements SignUpView {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.dispose();
+    }
+
+    @Override
     public void showMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
