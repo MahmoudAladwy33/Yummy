@@ -17,7 +17,7 @@ public interface MealService {
 
 
     @GET("filter.php")
-    Observable<MealResponse> searchMeals(
+    Observable<SearchMealResponse> searchMeals(
             @Query("i") String ingredient,
             @Query("c") String category,
             @Query("a") String area

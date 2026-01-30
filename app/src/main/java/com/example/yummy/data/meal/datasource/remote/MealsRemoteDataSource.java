@@ -69,7 +69,7 @@ public class MealsRemoteDataSource {
         });
     }
 
-    public Observable<MealResponse> searchMeals(String ingredient, String category, String area) {
+    public Observable<SearchMealResponse> searchMeals(String ingredient, String category, String area) {
         return mealService.searchMeals(ingredient, category, area);
     }
 
