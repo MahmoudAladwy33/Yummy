@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,6 +38,8 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
     MealAdapter adapter;
     RandomMealPresenter randomMealPresenter;
     CardView random_meal_card_view;
+
+    EditText etSearch;
     List<Meal> randomMeals = new ArrayList<>();
 
     public HomeFragment() {
@@ -58,7 +61,18 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
         tv_random_meal_name = view.findViewById(R.id.tvRandomMealName);
         tv_random_meal_country = view.findViewById(R.id.tvRandomMealCountry);
         random_meal_card_view = view.findViewById(R.id.random_meal_card_view);
+        etSearch = view.findViewById(R.id.etSearch);
         progressBar = view.findViewById(R.id.progress_home);
+
+        etSearch.setFocusable(false);
+        etSearch.setClickable(true);
+        etSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_homeFragment_to_searchFragment);
+            }
+        });
 
 
         random_meal_card_view.setOnClickListener(new View.OnClickListener() {

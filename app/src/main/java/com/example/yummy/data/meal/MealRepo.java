@@ -12,9 +12,12 @@ import com.example.yummy.data.meal.datasource.remote.OnCompleteFirestoreListener
 import com.example.yummy.data.meal.datasource.remote.OnFavMealsFetchedFirestore;
 import com.example.yummy.data.meal.datasource.remote.OnPlannedMealsFetchedFirestore;
 import com.example.yummy.data.meal.model.FavMealRoom;
+import com.example.yummy.data.meal.model.MealResponse;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
 
 public class MealRepo {
 
@@ -147,5 +150,11 @@ public class MealRepo {
         });
 
     }
+
+
+    public Observable<MealResponse> searchMeals(String ingredient, String category, String area) {
+        return mealsRemoteDataSource.searchMeals(ingredient, category, area);
+    }
+
 
 }
