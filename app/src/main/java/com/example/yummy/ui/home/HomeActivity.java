@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -35,6 +36,18 @@ public class HomeActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_home);
         NavController navController = navHostFragment.getNavController();
+
+        navController.addOnDestinationChangedListener(
+                (controller, destination, arguments) -> {
+
+                    if (destination.getId() == R.id.mealDetailsFragment ||
+                            destination.getId() == R.id.searchFragment) {
+
+                        bottomNavigationView.setVisibility(View.GONE);
+                    } else {
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                    }
+                });
 
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);

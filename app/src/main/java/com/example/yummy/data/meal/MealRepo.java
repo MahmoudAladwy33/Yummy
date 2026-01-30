@@ -5,16 +5,20 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.example.yummy.data.meal.datasource.local.MealsLocalDataSource;
+import com.example.yummy.data.meal.datasource.remote.FilterResponse;
 import com.example.yummy.data.meal.datasource.remote.FirestoreDataSource;
 import com.example.yummy.data.meal.datasource.remote.MealsNetworkResponse;
 import com.example.yummy.data.meal.datasource.remote.MealsRemoteDataSource;
 import com.example.yummy.data.meal.datasource.remote.OnCompleteFirestoreListener;
 import com.example.yummy.data.meal.datasource.remote.OnFavMealsFetchedFirestore;
 import com.example.yummy.data.meal.datasource.remote.OnPlannedMealsFetchedFirestore;
+import com.example.yummy.data.meal.datasource.remote.SearchMealResponse;
 import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
 
 public class MealRepo {
 
@@ -146,6 +150,16 @@ public class MealRepo {
             }
         });
 
+    }
+
+
+    public Observable<SearchMealResponse> searchMeals(String ingredient, String category, String area) {
+        return mealsRemoteDataSource.searchMeals(ingredient, category, area);
+    }
+
+
+    public Observable<FilterResponse> getFilter(String ingredient, String category, String area) {
+        return mealsRemoteDataSource.getFilter(ingredient, category, area);
     }
 
 }

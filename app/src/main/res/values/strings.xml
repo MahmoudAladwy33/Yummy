@@ -53,4 +53,8 @@
     <string name="tvCalendarMealCountry">CalendarMealCountry</string>
     <string name="continue_as_guest">Continue as guest</string>
     <string name="btn_logout">Logout</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="area">Area</string>
+    <string name="category">Category</string>
+    <string name="meal_search_name">Meal Name</string>
 </resources>

@@ -6,6 +6,7 @@ import com.example.yummy.data.meal.model.MealResponse;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,4 +68,14 @@ public class MealsRemoteDataSource {
             }
         });
     }
+
+    public Observable<SearchMealResponse> searchMeals(String ingredient, String category, String area) {
+        return mealService.searchMeals(ingredient, category, area);
+    }
+
+    public Observable<FilterResponse> getFilter(String ingredient, String category, String area) {
+        return mealService.getFilter(ingredient, category, area);
+    }
+
+
 }
