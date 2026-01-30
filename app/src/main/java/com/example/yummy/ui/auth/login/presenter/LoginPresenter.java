@@ -5,4 +5,6 @@ public interface LoginPresenter {
     void login(String email, String password);
 
     void loginAsGuest();
+
+    void dispose();
 }

@@ -109,6 +109,7 @@ public class login extends Fragment implements LoginView, GoogleView {
     public void onDestroy() {
         super.onDestroy();
         gPresenter.dispose();
+        presenter.dispose();
     }
 
     @Override

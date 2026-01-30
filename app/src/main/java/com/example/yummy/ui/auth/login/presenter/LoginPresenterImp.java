@@ -1,90 +1,109 @@
 package com.example.yummy.ui.auth.login.presenter;
 
 import android.content.Context;
+import android.util.Patterns;
 
 import com.example.yummy.data.auth.LoginRepo;
-import com.example.yummy.data.auth.datasource.remote.LoginResponse;
 import com.example.yummy.data.common.SessionManager;
 import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.ui.auth.login.view.LoginView;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginPresenterImp implements LoginPresenter {
 
     private LoginRepo loginRepo;
     private LoginView view;
     private SessionManager sessionManager;
-
     private MealRepo mealRepo;
-
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public LoginPresenterImp(LoginRepo loginRepo, LoginView view, Context context) {
         this.loginRepo = loginRepo;
         this.view = view;
         this.sessionManager = SessionManager.getInstance(context);
         this.mealRepo = new MealRepo(context);
-
     }
 
     @Override
     public void login(String email, String password) {
-        email = email.trim();
-        password = password.trim();
 
-
-        if (email.isEmpty() || password.isEmpty()) {
-            view.showMessage("Please fill all fields");
+        if (isNotValid(email, password)) {
             return;
         }
 
-
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            view.showMessage("Please enter a valid email");
-            return;
-        }
-
-
-        if (password.length() < 6) {
-            view.showMessage("Password must be at least 6 characters");
-            return;
-        }
-
-
-        if (password.contains(" ")) {
-            view.showMessage("Password cannot contain spaces");
-            return;
-        }
-
-
-        if (email.contains(" ")) {
-            view.showMessage("Email cannot contain spaces");
-            return;
-        }
         view.showLoading();
 
-        loginRepo.login(email, password, new LoginResponse() {
-            @Override
-            public void onSuccess(FirebaseUser user) {
-                mealRepo.syncFavFromFirestore();
-                mealRepo.syncPlanedFromFirestore();
-                sessionManager.setGuest(false);
-                view.hideLoading();
-                view.showMessage("Login Success");
-                view.navigateToHome();
-            }
+        disposables.add(
+                loginRepo.login(email.trim(), password.trim())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                user -> {
 
-            @Override
-            public void onError(String error) {
-                view.hideLoading();
-                view.showMessage(error);
-            }
-        });
+                                    mealRepo.syncFavFromFirestore();
+                                    mealRepo.syncPlanedFromFirestore();
+                                    sessionManager.setGuest(false);
+
+                                    view.hideLoading();
+                                    view.showMessage("Login Success");
+                                    view.navigateToHome();
+                                },
+                                throwable -> {
+                                    view.hideLoading();
+                                    String errorMessage;
+                                    if (throwable instanceof FirebaseAuthInvalidUserException) {
+                                        errorMessage = "Email not registered";
+                                    } else if (throwable instanceof FirebaseAuthInvalidCredentialsException) {
+                                        errorMessage = "Wrong password";
+                                    } else {
+                                        errorMessage = throwable.getMessage() != null ? throwable.getMessage() : "Login failed, try again";
+                                    }
+                                    view.showMessage(errorMessage);
+                                }
+                        )
+        );
     }
 
     @Override
     public void loginAsGuest() {
         sessionManager.setGuest(true);
         view.navigateToHome();
+    }
 
+    @Override
+    public void dispose() {
+        disposables.clear();
+    }
+
+    private boolean isNotValid(String email, String password) {
+        String e = email.trim();
+        String p = password.trim();
+
+        if (e.isEmpty() || p.isEmpty()) {
+            view.showMessage("Please fill all fields");
+            return true;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(e).matches()) {
+            view.showMessage("Please enter a valid email");
+            return true;
+        }
+
+        if (p.length() < 6) {
+            view.showMessage("Password must be at least 6 characters");
+            return true;
+        }
+
+        if (p.contains(" ") || e.contains(" ")) {
+            view.showMessage("Email or Password cannot contain spaces");
+            return true;
+        }
+
+        return false;
     }
 }
