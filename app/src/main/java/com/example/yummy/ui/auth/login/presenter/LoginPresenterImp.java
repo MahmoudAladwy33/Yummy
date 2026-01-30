@@ -3,7 +3,7 @@ package com.example.yummy.ui.auth.login.presenter;
 import android.content.Context;
 import android.util.Patterns;
 
-import com.example.yummy.data.auth.LoginRepo;
+import com.example.yummy.data.auth.AuthRepo;
 import com.example.yummy.data.common.SessionManager;
 import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.ui.auth.login.view.LoginView;
@@ -16,14 +16,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginPresenterImp implements LoginPresenter {
 
-    private LoginRepo loginRepo;
+    private AuthRepo authRepo;
     private LoginView view;
     private SessionManager sessionManager;
     private MealRepo mealRepo;
     private CompositeDisposable disposables = new CompositeDisposable();
 
-    public LoginPresenterImp(LoginRepo loginRepo, LoginView view, Context context) {
-        this.loginRepo = loginRepo;
+    public LoginPresenterImp(AuthRepo authRepo, LoginView view, Context context) {
+        this.authRepo = authRepo;
         this.view = view;
         this.sessionManager = SessionManager.getInstance(context);
         this.mealRepo = new MealRepo(context);
@@ -39,7 +39,7 @@ public class LoginPresenterImp implements LoginPresenter {
         view.showLoading();
 
         disposables.add(
-                loginRepo.login(email.trim(), password.trim())
+                authRepo.login(email.trim(), password.trim())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

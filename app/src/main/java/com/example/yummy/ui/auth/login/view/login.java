@@ -17,8 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.yummy.R;
-import com.example.yummy.data.auth.LoginRepo;
-import com.example.yummy.data.auth.datasource.GoogleSignRepo;
+import com.example.yummy.data.auth.AuthRepo;
 import com.example.yummy.ui.auth.Google.presenter.GooglePresenter;
 import com.example.yummy.ui.auth.Google.presenter.GooglePresenterImp;
 import com.example.yummy.ui.auth.Google.view.GoogleView;
@@ -52,8 +51,8 @@ public class login extends Fragment implements LoginView, GoogleView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new LoginPresenterImp(new LoginRepo(getContext()), this, requireContext());
-        gPresenter = new GooglePresenterImp(this, new GoogleSignRepo(getContext()), requireContext());
+        presenter = new LoginPresenterImp(new AuthRepo(getContext()), this, requireContext());
+        gPresenter = new GooglePresenterImp(this, new AuthRepo(getContext()), requireContext());
     }
 
     @Override

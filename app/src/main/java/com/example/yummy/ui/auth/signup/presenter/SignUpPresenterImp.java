@@ -2,7 +2,7 @@ package com.example.yummy.ui.auth.signup.presenter;
 
 import android.content.Context;
 
-import com.example.yummy.data.auth.SignUpRepo;
+import com.example.yummy.data.auth.AuthRepo;
 import com.example.yummy.data.common.SessionManager;
 import com.example.yummy.ui.auth.signup.view.SignUpView;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -16,13 +16,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class SignUpPresenterImp implements SignUpPresenter {
 
     private SignUpView view;
-    private SignUpRepo signUpRepo;
+    private AuthRepo authRepo;
     private SessionManager sessionManager;
     private CompositeDisposable disposables = new CompositeDisposable();
 
-    public SignUpPresenterImp(SignUpView view, SignUpRepo signUpRepo, Context context) {
+    public SignUpPresenterImp(SignUpView view, AuthRepo authRepo, Context context) {
         this.view = view;
-        this.signUpRepo = signUpRepo;
+        this.authRepo = authRepo;
         this.sessionManager = SessionManager.getInstance(context);
     }
 
@@ -41,7 +41,7 @@ public class SignUpPresenterImp implements SignUpPresenter {
         view.showLoading();
 
         disposables.add(
-                signUpRepo.signUp(email, password)
+                authRepo.signUp(email, password)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

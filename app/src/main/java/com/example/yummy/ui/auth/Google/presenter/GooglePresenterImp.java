@@ -2,7 +2,7 @@ package com.example.yummy.ui.auth.Google.presenter;
 
 import android.content.Context;
 
-import com.example.yummy.data.auth.datasource.GoogleSignRepo;
+import com.example.yummy.data.auth.AuthRepo;
 import com.example.yummy.data.common.SessionManager;
 import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.ui.auth.Google.view.GoogleView;
@@ -15,15 +15,15 @@ public class GooglePresenterImp implements GooglePresenter {
 
     private SessionManager sessionManager;
     private GoogleView view;
-    private GoogleSignRepo googleSignRepo;
+    private AuthRepo authRepo;
     private MealRepo mealRepo;
 
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
-    public GooglePresenterImp(GoogleView view, GoogleSignRepo googleSignRepo, Context context) {
+    public GooglePresenterImp(GoogleView view, AuthRepo authRepo, Context context) {
         this.view = view;
-        this.googleSignRepo = googleSignRepo;
+        this.authRepo = authRepo;
         this.sessionManager = SessionManager.getInstance(context);
         this.mealRepo = new MealRepo(context);
     }
@@ -33,7 +33,7 @@ public class GooglePresenterImp implements GooglePresenter {
         view.showLoading();
 
         disposables.add(
-                googleSignRepo.signWithGoogle(idToken)
+                authRepo.signWithGoogle(idToken)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

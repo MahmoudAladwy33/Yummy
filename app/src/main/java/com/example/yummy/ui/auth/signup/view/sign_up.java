@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.yummy.R;
-import com.example.yummy.data.auth.SignUpRepo;
+import com.example.yummy.data.auth.AuthRepo;
 import com.example.yummy.ui.auth.signup.presenter.SignUpPresenter;
 import com.example.yummy.ui.auth.signup.presenter.SignUpPresenterImp;
 import com.example.yummy.ui.home.HomeActivity;
@@ -39,7 +39,7 @@ public class sign_up extends Fragment implements SignUpView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new SignUpPresenterImp(this, new SignUpRepo(getContext()), requireContext());
+        presenter = new SignUpPresenterImp(this, new AuthRepo(getContext()), requireContext());
 
     }
 
