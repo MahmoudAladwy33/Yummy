@@ -3,19 +3,23 @@ package com.example.yummy.ui.auth.Google.presenter;
 import android.content.Context;
 
 import com.example.yummy.data.auth.datasource.GoogleSignRepo;
-import com.example.yummy.data.auth.datasource.remote.GoogleSignResponse;
 import com.example.yummy.data.common.SessionManager;
 import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.ui.auth.Google.view.GoogleView;
-import com.google.firebase.auth.FirebaseUser;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GooglePresenterImp implements GooglePresenter {
 
-    SessionManager sessionManager;
+    private SessionManager sessionManager;
     private GoogleView view;
     private GoogleSignRepo googleSignRepo;
     private MealRepo mealRepo;
 
+
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public GooglePresenterImp(GoogleView view, GoogleSignRepo googleSignRepo, Context context) {
         this.view = view;
@@ -24,28 +28,35 @@ public class GooglePresenterImp implements GooglePresenter {
         this.mealRepo = new MealRepo(context);
     }
 
-
     @Override
     public void signInWithGoogle(String idToken) {
+        view.showLoading();
 
-        googleSignRepo.SignWithGoogle(idToken, new GoogleSignResponse() {
-            @Override
-            public void onSuccess(FirebaseUser user) {
-                sessionManager.setGuest(false);
-                mealRepo.syncFavFromFirestore();
-                mealRepo.syncPlanedFromFirestore();
-                view.hideLoading();
-                view.onGoogleSignInSuccess(user);
-                view.navigateToHome();
-            }
+        disposables.add(
+                googleSignRepo.signWithGoogle(idToken)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                user -> {
 
-            @Override
-            public void onError(String errorMessage) {
-                view.hideLoading();
-                view.onGoogleSignInFailed(errorMessage);
+                                    sessionManager.setGuest(false);
+                                    mealRepo.syncFavFromFirestore();
+                                    mealRepo.syncPlanedFromFirestore();
+                                    view.hideLoading();
+                                    view.onGoogleSignInSuccess(user);
+                                    view.navigateToHome();
+                                },
+                                throwable -> {
 
-            }
-        });
+                                    view.hideLoading();
+                                    view.onGoogleSignInFailed(throwable.getMessage());
+                                }
+                        )
+        );
+    }
 
+    @Override
+    public void dispose() {
+        disposables.clear();
     }
 }

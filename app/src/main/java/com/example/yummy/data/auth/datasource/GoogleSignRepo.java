@@ -3,7 +3,9 @@ package com.example.yummy.data.auth.datasource;
 import android.content.Context;
 
 import com.example.yummy.data.auth.datasource.remote.GoogleSignDataSource;
-import com.example.yummy.data.auth.datasource.remote.GoogleSignResponse;
+import com.google.firebase.auth.FirebaseUser;
+
+import io.reactivex.rxjava3.core.Single;
 
 public class GoogleSignRepo {
 
@@ -13,8 +15,7 @@ public class GoogleSignRepo {
         this.googleSignDataSource = new GoogleSignDataSource();
     }
 
-    public  void SignWithGoogle(String idToken , GoogleSignResponse callback){
-
-        googleSignDataSource.signWithGoogle(idToken,callback);
+    public Single<FirebaseUser> signWithGoogle(String idToken) {
+        return googleSignDataSource.signWithGoogle(idToken);
     }
 }
