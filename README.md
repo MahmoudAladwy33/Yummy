@@ -1,6 +1,6 @@
 # Yummy App
 
-**Yummy** is an Android application built with Java that helps users discover, plan, and manage meals. The app fetches data from **TheMealDB API** and is inspired by the **SideChef** app. It supports both guest users and registered users, with offline functionality and cloud sync.
+**Yummy** is an Android application built with Java that helps users discover, plan, and manage meals.It supports both guest users and registered users, with offline functionality and cloud sync.
 
 ## Features
 
