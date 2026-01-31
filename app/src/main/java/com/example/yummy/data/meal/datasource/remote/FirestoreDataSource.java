@@ -1,12 +1,14 @@
 package com.example.yummy.data.meal.datasource.remote;
 
-
 import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 
 public class FirestoreDataSource {
 
@@ -19,79 +21,64 @@ public class FirestoreDataSource {
     }
 
     private String getUserId() {
-        return auth.getCurrentUser().getUid();
+        return (auth.getCurrentUser() != null) ? auth.getCurrentUser().getUid() : "";
     }
 
-
-    public void addToFavorites(FavMealRoom favMeal, OnCompleteFirestoreListener listener) {
-        firestore
-                .collection("users")
-                .document(getUserId())
-                .collection("favorites")
-                .document(favMeal.getMealId())
-                .set(favMeal)
-                .addOnSuccessListener(aVoid -> listener.onSuccess())
-                .addOnFailureListener(listener::onFailure);
+    public Completable addToFavorites(FavMealRoom favMeal) {
+        return Completable.create(emitter -> {
+            firestore.collection("users").document(getUserId())
+                    .collection("favorites").document(favMeal.getMealId())
+                    .set(favMeal)
+                    .addOnSuccessListener(aVoid -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
+        });
     }
 
-    public void removeFromFavorites(String mealId, OnCompleteFirestoreListener listener) {
-        firestore
-                .collection("users")
-                .document(getUserId())
-                .collection("favorites")
-                .document(mealId)
-                .delete()
-                .addOnSuccessListener(aVoid -> listener.onSuccess())
-                .addOnFailureListener(listener::onFailure);
+    public Completable removeFromFavorites(String mealId) {
+        return Completable.create(emitter -> {
+            firestore.collection("users").document(getUserId())
+                    .collection("favorites").document(mealId)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
+        });
     }
 
-    public void getFavorites(OnFavMealsFetchedFirestore callback) {
-        firestore
-                .collection("users")
-                .document(getUserId())
-                .collection("favorites")
-                .get()
-                .addOnSuccessListener(snapshot -> {
-                    List<FavMealRoom> meals = snapshot.toObjects(FavMealRoom.class);
-                    callback.onFavSuccess(meals);
-
-                });
+    public Single<List<FavMealRoom>> getFavorites() {
+        return Single.create(emitter -> {
+            firestore.collection("users").document(getUserId())
+                    .collection("favorites").get()
+                    .addOnSuccessListener(snapshot -> emitter.onSuccess(snapshot.toObjects(FavMealRoom.class)))
+                    .addOnFailureListener(emitter::onError);
+        });
     }
 
-
-    public void addToPlanned(PlannedMealRoom plannedMeal, OnCompleteFirestoreListener listener) {
-        firestore
-                .collection("users")
-                .document(getUserId())
-                .collection("plannedMeals")
-                .document(plannedMeal.getMealId())
-                .set(plannedMeal)
-                .addOnSuccessListener(aVoid -> listener.onSuccess())
-                .addOnFailureListener(listener::onFailure);
+    public Completable addToPlanned(PlannedMealRoom plannedMeal) {
+        return Completable.create(emitter -> {
+            firestore.collection("users").document(getUserId())
+                    .collection("plannedMeals").document(plannedMeal.getMealId())
+                    .set(plannedMeal)
+                    .addOnSuccessListener(aVoid -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
+        });
     }
 
-    public void removeFromPlanned(String mealId, OnCompleteFirestoreListener listener) {
-        firestore
-                .collection("users")
-                .document(getUserId())
-                .collection("plannedMeals")
-                .document(mealId)
-                .delete()
-                .addOnSuccessListener(aVoid -> listener.onSuccess())
-                .addOnFailureListener(listener::onFailure);
+    public Completable removeFromPlanned(String mealId) {
+        return Completable.create(emitter -> {
+            firestore.collection("users").document(getUserId())
+                    .collection("plannedMeals").document(mealId)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> emitter.onComplete())
+                    .addOnFailureListener(emitter::onError);
+        });
     }
 
-
-    public void getPlanned(OnPlannedMealsFetchedFirestore callback) {
-        firestore
-                .collection("users")
-                .document(getUserId())
-                .collection("plannedMeals")
-                .get()
-                .addOnSuccessListener(snapshot -> {
-                    List<PlannedMealRoom> meals = snapshot.toObjects(PlannedMealRoom.class);
-                    callback.onPlannedSuccess(meals);
-
-                });
+    public Single<List<PlannedMealRoom>> getPlanned() {
+        return Single.create(emitter -> {
+            firestore.collection("users").document(getUserId())
+                    .collection("plannedMeals").get()
+                    .addOnSuccessListener(snapshot -> emitter.onSuccess(snapshot.toObjects(PlannedMealRoom.class)))
+                    .addOnFailureListener(emitter::onError);
+        });
     }
 }

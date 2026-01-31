@@ -2,18 +2,19 @@ package com.example.yummy.ui.home.calendar.presenter;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
-import com.example.yummy.ui.home.calendar.PlannedMealsViews;
+import com.example.yummy.ui.home.calendar.view.PlannedMealsViews;
 
-import java.util.List;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class PlannedMealsPresenterImp implements PlannedMealsPresenter {
 
-    MealRepo mealRepo;
-    PlannedMealsViews plannedMealsViews;
+    private MealRepo mealRepo;
+    private PlannedMealsViews plannedMealsViews;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public PlannedMealsPresenterImp(Context context, PlannedMealsViews plannedMealsViews) {
         this.mealRepo = new MealRepo(context);
@@ -21,14 +22,42 @@ public class PlannedMealsPresenterImp implements PlannedMealsPresenter {
     }
 
     @Override
-    public LiveData<List<PlannedMealRoom>> loadPlannedMeals() {
-        return mealRepo.getPlanbedMeals();
+    public void loadPlannedMeals() {
+        disposables.add(
+                mealRepo.getPlannedMeals()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                plannedMeals -> {
 
+                                    plannedMealsViews.showPlannedMeals(plannedMeals);
+                                },
+                                throwable -> {
+                                    plannedMealsViews.showErrorMessage(throwable.getMessage());
+                                }
+                        )
+        );
     }
 
     @Override
     public void deletePlannedMeal(PlannedMealRoom meal) {
-        mealRepo.deletePlannedMeal(meal);
-        plannedMealsViews.deletePlannedMealSuccess();
+        disposables.add(
+                mealRepo.deletePlannedMeal(meal)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                () -> {
+                                    plannedMealsViews.deletePlannedMealSuccess();
+                                },
+                                throwable -> {
+                                    plannedMealsViews.showErrorMessage(throwable.getMessage());
+                                }
+                        )
+        );
+    }
+
+    @Override
+    public void dispose() {
+        disposables.clear();
     }
 }

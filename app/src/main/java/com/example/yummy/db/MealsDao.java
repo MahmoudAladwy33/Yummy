@@ -1,6 +1,5 @@
 package com.example.yummy.db;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -11,21 +10,24 @@ import com.example.yummy.data.meal.model.FavMealRoom;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 @Dao
 public interface MealsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertFavMeal(FavMealRoom meal);
+    Completable insertFavMeal(FavMealRoom meal);
 
 
     @Query("SELECT * FROM Fav_meals ORDER BY mealId ASC")
-    LiveData<List<FavMealRoom>> getFavMeals();
+    Observable<List<FavMealRoom>> getFavMeals();
 
 
     @Delete
-    void deleteFavMeal(FavMealRoom meal);
+    Completable deleteFavMeal(FavMealRoom meal);
 
 
     @Query("DELETE FROM Fav_meals")
-    void clearFavMeals();
+    Completable clearFavMeals();
 }

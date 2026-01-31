@@ -175,6 +175,9 @@ public class MealDetailsFragment extends Fragment implements MealDetailsViews {
     public void onDestroyView() {
         super.onDestroyView();
         ((HomeActivity) requireActivity()).findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
+        if (mealDetailsPresenter != null) {
+            mealDetailsPresenter.dispose();
+        }
     }
 
     @Override

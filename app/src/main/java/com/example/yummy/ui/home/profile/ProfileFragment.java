@@ -63,6 +63,14 @@ public class ProfileFragment extends Fragment implements ProfileViews {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (logoutPresenter != null) {
+            logoutPresenter.dispose();
+        }
+    }
+
+    @Override
     public void showLogoutDialog() {
 
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
@@ -111,4 +119,5 @@ public class ProfileFragment extends Fragment implements ProfileViews {
         requireActivity().finish();
 
     }
+
 }

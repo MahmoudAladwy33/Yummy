@@ -2,23 +2,20 @@ package com.example.yummy.data.meal;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.yummy.data.meal.datasource.local.MealsLocalDataSource;
 import com.example.yummy.data.meal.datasource.remote.FilterResponse;
 import com.example.yummy.data.meal.datasource.remote.FirestoreDataSource;
-import com.example.yummy.data.meal.datasource.remote.MealsNetworkResponse;
 import com.example.yummy.data.meal.datasource.remote.MealsRemoteDataSource;
-import com.example.yummy.data.meal.datasource.remote.OnCompleteFirestoreListener;
-import com.example.yummy.data.meal.datasource.remote.OnFavMealsFetchedFirestore;
-import com.example.yummy.data.meal.datasource.remote.OnPlannedMealsFetchedFirestore;
 import com.example.yummy.data.meal.datasource.remote.SearchMealResponse;
 import com.example.yummy.data.meal.model.FavMealRoom;
+import com.example.yummy.data.meal.model.Meal;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class MealRepo {
 
@@ -34,122 +31,66 @@ public class MealRepo {
     }
 
 
-    public void getRandomMeal(MealsNetworkResponse mealsNetworkResponse) {
-        mealsRemoteDataSource.getRandomMeal(mealsNetworkResponse);
+    public Single<List<Meal>> getRandomMeal() {
+        return mealsRemoteDataSource.getRandomMeal()
+                .map(mealResponse -> mealResponse.mealList);
     }
 
-    public LiveData<List<FavMealRoom>> getFavMeals() {
-
+    public Observable<List<FavMealRoom>> getFavMeals() {
         return mealsLocalDataSource.getFavMeals();
     }
 
-
-    public void clearFavMeals() {
-        mealsLocalDataSource.clearAllTables();
+    public Completable clearAllTables() {
+        return mealsLocalDataSource.clearAllTables();
     }
 
 
-    public void insertFavMeal(FavMealRoom favMealRoom) {
-
-        firestoreDataSource.addToFavorites(favMealRoom, new OnCompleteFirestoreListener() {
-
-            @Override
-            public void onSuccess() {
-                mealsLocalDataSource.insertFavMeal(favMealRoom);
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-
+    public Completable insertFavMeal(FavMealRoom favMealRoom) {
+        return firestoreDataSource.addToFavorites(favMealRoom)
+                .andThen(mealsLocalDataSource.insertFavMeal(favMealRoom));
     }
 
 
-    public void deleteFavMeal(FavMealRoom favMealRoom) {
-        firestoreDataSource.removeFromFavorites(favMealRoom.getMealId(), new OnCompleteFirestoreListener() {
-            @Override
-            public void onSuccess() {
-                mealsLocalDataSource.deleteFavMeal(favMealRoom);
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-
-    }
-
-    public void getMealById(String id, MealsNetworkResponse mealsNetworkResponse) {
-        mealsRemoteDataSource.getMealById(id, mealsNetworkResponse);
+    public Completable deleteFavMeal(FavMealRoom favMealRoom) {
+        return firestoreDataSource.removeFromFavorites(favMealRoom.getMealId())
+                .andThen(mealsLocalDataSource.deleteFavMeal(favMealRoom));
     }
 
 
-    public void insertPlannedMeal(PlannedMealRoom meal) {
-
-        firestoreDataSource.addToPlanned(meal, new OnCompleteFirestoreListener() {
-            @Override
-            public void onSuccess() {
-                mealsLocalDataSource.insertPlannedMeal(meal);
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-
+    public Single<List<Meal>> getMealById(String id) {
+        return mealsRemoteDataSource.getMealById(id)
+                .map(mealResponse -> mealResponse.mealList);
     }
 
-    public LiveData<List<PlannedMealRoom>> getPlanbedMeals() {
 
+    public Completable insertPlannedMeal(PlannedMealRoom meal) {
+        return firestoreDataSource.addToPlanned(meal)
+                .andThen(mealsLocalDataSource.insertPlannedMeal(meal));
+    }
+
+    public Observable<List<PlannedMealRoom>> getPlannedMeals() {
         return mealsLocalDataSource.getPlannedMeals();
-
     }
 
-    public void deletePlannedMeal(PlannedMealRoom meal) {
-        firestoreDataSource.removeFromPlanned(meal.getMealId(), new OnCompleteFirestoreListener() {
-            @Override
-            public void onSuccess() {
-                mealsLocalDataSource.deletePlannedMeal(meal);
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-
+    public Completable deletePlannedMeal(PlannedMealRoom meal) {
+        return firestoreDataSource.removeFromPlanned(meal.getMealId())
+                .andThen(mealsLocalDataSource.deletePlannedMeal(meal));
     }
 
-    public void syncFavFromFirestore() {
-        firestoreDataSource.getFavorites(new OnFavMealsFetchedFirestore() {
-            @Override
-            public void onFavSuccess(List<FavMealRoom> mealList) {
-                for (FavMealRoom meal : mealList) {
-                    mealsLocalDataSource.insertFavMeal(meal);
-                }
-            }
-
-        });
+    public Completable syncFavFromFirestore() {
+        return firestoreDataSource.getFavorites()
+                .flatMapCompletable(mealList -> {
+                    return Observable.fromIterable(mealList)
+                            .flatMapCompletable(meal -> mealsLocalDataSource.insertFavMeal(meal));
+                });
     }
 
-    public void syncPlanedFromFirestore() {
-        firestoreDataSource.getPlanned(new OnPlannedMealsFetchedFirestore() {
-            @Override
-            public void onPlannedSuccess(List<PlannedMealRoom> mealList) {
-                for (PlannedMealRoom meal : mealList) {
-                    mealsLocalDataSource.insertPlannedMeal(meal);
-                }
-            }
-        });
-
+    public Completable syncPlanedFromFirestore() {
+        return firestoreDataSource.getPlanned()
+                .flatMapCompletable(mealList -> {
+                    return Observable.fromIterable(mealList)
+                            .flatMapCompletable(meal -> mealsLocalDataSource.insertPlannedMeal(meal));
+                });
     }
 
 

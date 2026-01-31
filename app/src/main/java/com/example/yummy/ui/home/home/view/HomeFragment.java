@@ -102,6 +102,13 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (randomMealPresenter != null) {
+            randomMealPresenter.dispose();
+        }
+    }
 
     @Override
     public void showRandomMeal(Meal meal) {
@@ -153,3 +160,5 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
                 .navigate(action);
     }
 }
+
+
