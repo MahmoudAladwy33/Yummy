@@ -4,4 +4,6 @@ public interface SearchPresenter {
     void searchMeal(String filterType, String query);
 
     void getFilterSuggestions(String filterType);
+
+    void dispose();
 }

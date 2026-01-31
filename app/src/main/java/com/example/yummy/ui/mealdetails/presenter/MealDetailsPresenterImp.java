@@ -112,6 +112,7 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
         mealDetailsViews.showLoading();
         disposables.add(
                 mealRepo.getMealById(id)
+                        .map(mealResponse -> mealResponse.mealList)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

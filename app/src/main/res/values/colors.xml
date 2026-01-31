@@ -8,6 +8,7 @@
     <color name="offWhite">#E0E0E0</color>
     <color name="red">#F44336</color>
     <color name="gray_800">#424242</color>
+    <color name="BottomNavBackgroundColor">#ADF8CB</color>
 
 
 </resources>

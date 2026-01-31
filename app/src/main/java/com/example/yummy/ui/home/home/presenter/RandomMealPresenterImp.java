@@ -5,6 +5,8 @@ import android.content.Context;
 import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.ui.home.home.view.RandomMealViews;
 
+import java.io.IOException;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -28,6 +30,7 @@ public class RandomMealPresenterImp implements RandomMealPresenter {
 
         disposables.add(
                 mealRepo.getRandomMeal()
+                        .map(mealResponse -> mealResponse.mealList)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
@@ -39,7 +42,11 @@ public class RandomMealPresenterImp implements RandomMealPresenter {
                                 },
                                 throwable -> {
                                     randomMealViews.hideLoading();
-                                    randomMealViews.showError(throwable.getMessage());
+                                    if (throwable instanceof IOException)
+                                        randomMealViews.showError("Please check your internet connection");
+                                    else {
+                                        randomMealViews.showError("UnKnown error occurred");
+                                    }
                                 }
                         )
         );

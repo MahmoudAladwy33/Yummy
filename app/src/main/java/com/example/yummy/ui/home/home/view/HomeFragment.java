@@ -41,6 +41,8 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
 
     EditText etSearch;
     List<Meal> randomMeals = new ArrayList<>();
+    private boolean isDataReady = false;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -69,6 +71,7 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isDataReady) return;
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_homeFragment_to_searchFragment);
             }
@@ -78,6 +81,9 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
         random_meal_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isDataReady || randomMeals.isEmpty()) {
+                    return;
+                }
                 HomeFragmentDirections.ActionHomeFragmentToMealDetailsFragment action =
                         HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(randomMeals.get(0).getMealId());
                 NavHostFragment.findNavController(HomeFragment.this)
@@ -132,6 +138,7 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
             progressBar.setVisibility(View.GONE);
             List<Meal> mealsForRecycler = randomMeals.subList(1, randomMeals.size());
             adapter.setMealList(mealsForRecycler);
+            isDataReady = true;
         }
 
 
@@ -139,6 +146,7 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
 
     @Override
     public void showError(String message) {
+        isDataReady = false;
         Toast.makeText(getContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
     }
 
@@ -154,6 +162,7 @@ public class HomeFragment extends Fragment implements RandomMealViews, OnItemCli
 
     @Override
     public void onItemClick(Meal meal) {
+        if (!isDataReady || meal == null) return;
         HomeFragmentDirections.ActionHomeFragmentToMealDetailsFragment action =
                 HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(meal.getMealId());
         NavHostFragment.findNavController(HomeFragment.this)

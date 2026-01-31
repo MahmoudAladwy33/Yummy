@@ -8,7 +8,7 @@ import com.example.yummy.data.meal.datasource.remote.FirestoreDataSource;
 import com.example.yummy.data.meal.datasource.remote.MealsRemoteDataSource;
 import com.example.yummy.data.meal.datasource.remote.SearchMealResponse;
 import com.example.yummy.data.meal.model.FavMealRoom;
-import com.example.yummy.data.meal.model.Meal;
+import com.example.yummy.data.meal.model.MealResponse;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 
 import java.util.List;
@@ -31,9 +31,9 @@ public class MealRepo {
     }
 
 
-    public Single<List<Meal>> getRandomMeal() {
-        return mealsRemoteDataSource.getRandomMeal()
-                .map(mealResponse -> mealResponse.mealList);
+    public Single<MealResponse> getRandomMeal() {
+        return mealsRemoteDataSource.getRandomMeal();
+
     }
 
     public Observable<List<FavMealRoom>> getFavMeals() {
@@ -57,9 +57,9 @@ public class MealRepo {
     }
 
 
-    public Single<List<Meal>> getMealById(String id) {
-        return mealsRemoteDataSource.getMealById(id)
-                .map(mealResponse -> mealResponse.mealList);
+    public Single<MealResponse> getMealById(String id) {
+        return mealsRemoteDataSource.getMealById(id);
+
     }
 
 

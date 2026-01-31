@@ -135,6 +135,13 @@ public class SearchFragment extends Fragment
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (presenter != null) {
+            presenter.dispose();
+        }
+    }
 
     private String getSelectedChip() {
         if (chipIngredient.isChecked()) return "ingredient";

@@ -3,6 +3,7 @@
     <style name="Base.Theme.Yummy" parent="Theme.Material3.DayNight.NoActionBar">
 
         <item name="android:fontFamily">@font/app_fonts</item>
+        <item name="colorSecondaryContainer">@color/BottomNavBackgroundColor</item>
 
 
         <!-- Customize your light theme here. -->
