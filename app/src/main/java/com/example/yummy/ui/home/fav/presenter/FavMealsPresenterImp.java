@@ -29,12 +29,13 @@ public class FavMealsPresenterImp implements FavMealsPresenter {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 favMeals -> {
-
                                     favMealsViews.showFavMeals(favMeals);
                                 },
                                 throwable -> {
+                                    favMealsViews.showErrorMessage(throwable.getMessage());
 
                                 }
+
                         )
         );
     }
@@ -47,12 +48,11 @@ public class FavMealsPresenterImp implements FavMealsPresenter {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 () -> {
-
                                     favMealsViews.deleteFavMealSuccess();
                                 },
                                 throwable -> {
 
-
+                                    favMealsViews.showErrorMessage(throwable.getMessage());
                                 }
                         )
         );

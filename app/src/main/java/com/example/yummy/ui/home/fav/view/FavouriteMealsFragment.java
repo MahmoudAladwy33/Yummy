@@ -71,9 +71,8 @@ public class FavouriteMealsFragment extends Fragment implements FavMealsViews, O
         } else {
             tvEmptyFav.setVisibility(GONE);
             rvFavMeals.setVisibility(VISIBLE);
-
             adapter.setFavMeals(favMeals);
-            adapter.notifyDataSetChanged();
+
         }
     }
 
