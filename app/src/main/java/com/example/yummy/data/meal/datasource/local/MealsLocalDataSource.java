@@ -2,8 +2,6 @@ package com.example.yummy.data.meal.datasource.local;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.yummy.data.meal.model.FavMealRoom;
 import com.example.yummy.data.meal.model.PlannedMealRoom;
 import com.example.yummy.db.AppDataBase;
@@ -11,6 +9,9 @@ import com.example.yummy.db.MealsDao;
 import com.example.yummy.db.PlannedMealsDao;
 
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 
 public class MealsLocalDataSource {
 
@@ -24,60 +25,37 @@ public class MealsLocalDataSource {
     }
 
 
-    public void insertFavMeal(FavMealRoom meal) {
+    public Completable insertFavMeal(FavMealRoom meal) {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mealsDao.insertFavMeal(meal);
-            }
-        }).start();
+        return mealsDao.insertFavMeal(meal);
 
     }
 
-    public void deleteFavMeal(FavMealRoom meal) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mealsDao.deleteFavMeal(meal);
-            }
-        }).start();
+    public Completable deleteFavMeal(FavMealRoom meal) {
+        return mealsDao.deleteFavMeal(meal);
     }
 
 
-    public LiveData<List<FavMealRoom>> getFavMeals() {
+    public Observable<List<FavMealRoom>> getFavMeals() {
         return mealsDao.getFavMeals();
     }
 
 
-    public void insertPlannedMeal(PlannedMealRoom meal) {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                plannedMealsDao.insertPlannedMeal(meal);
-            }
-        }).start();
-
+    public Completable insertPlannedMeal(PlannedMealRoom meal) {
+        return plannedMealsDao.insertPlannedMeal(meal);
     }
 
-    public LiveData<List<PlannedMealRoom>> getPlannedMeals() {
+    public Observable<List<PlannedMealRoom>> getPlannedMeals() {
         return plannedMealsDao.getPlannedMeals();
     }
 
-    public void deletePlannedMeal(PlannedMealRoom meal) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                plannedMealsDao.deletePlannedMeal(meal);
-            }
-        }).start();
+    public Completable deletePlannedMeal(PlannedMealRoom meal) {
+        return plannedMealsDao.deletePlannedMeal(meal);
     }
 
-    public void clearAllTables() {
-        mealsDao.clearFavMeals();
-        plannedMealsDao.clearPlannedMeals();
+    public Completable clearAllTables() {
+        return mealsDao.clearFavMeals()
+                .andThen(plannedMealsDao.clearPlannedMeals());
     }
-
 
 }

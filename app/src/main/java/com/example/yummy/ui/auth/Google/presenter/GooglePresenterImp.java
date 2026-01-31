@@ -13,11 +13,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GooglePresenterImp implements GooglePresenter {
 
+    private static final String TAG = "GooglePresenter";
     private SessionManager sessionManager;
     private GoogleView view;
     private AuthRepo authRepo;
     private MealRepo mealRepo;
-
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -35,21 +35,26 @@ public class GooglePresenterImp implements GooglePresenter {
         disposables.add(
                 authRepo.signWithGoogle(idToken)
                         .subscribeOn(Schedulers.io())
+                        .flatMapCompletable(user -> {
+                            sessionManager.setGuest(false);
+
+                            return mealRepo.clearAllTables()
+                                    .andThen(mealRepo.syncFavFromFirestore())
+                                    .andThen(mealRepo.syncPlanedFromFirestore());
+                        })
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                user -> {
-
-                                    sessionManager.setGuest(false);
-                                    mealRepo.syncFavFromFirestore();
-                                    mealRepo.syncPlanedFromFirestore();
+                                () -> {
                                     view.hideLoading();
-                                    view.onGoogleSignInSuccess(user);
                                     view.navigateToHome();
                                 },
                                 throwable -> {
-
                                     view.hideLoading();
-                                    view.onGoogleSignInFailed(throwable.getMessage());
+                                    view.onGoogleSignInFailed(
+                                            throwable.getMessage() != null
+                                                    ? throwable.getMessage()
+                                                    : "Google login failed"
+                                    );
                                 }
                         )
         );

@@ -4,4 +4,6 @@ public interface ProfilePresenter {
     void logout();
 
     void showUserEmail();
+
+    void dispose();
 }

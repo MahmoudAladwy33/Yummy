@@ -1,5 +1,6 @@
 package com.example.yummy.ui.home.fav.view;
 
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,71 +24,73 @@ import com.example.yummy.ui.home.fav.presenter.FavMealsPresenterImp;
 
 import java.util.List;
 
-
 public class FavouriteMealsFragment extends Fragment implements FavMealsViews, OnFavClickListener {
 
-
-    RecyclerView rvFavMeals;
-    FavMealAdapter adapter;
-    FavMealsPresenter presenter;
-
-    TextView tvEmptyFav;
-    ProgressBar progressBar;
+    private RecyclerView rvFavMeals;
+    private FavMealAdapter adapter;
+    private FavMealsPresenter presenter;
+    private TextView tvEmptyFav;
+    private ProgressBar progressBar;
 
     public FavouriteMealsFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favourite_meals, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         rvFavMeals = view.findViewById(R.id.rvFavMeals);
         progressBar = view.findViewById(R.id.progress_fav_meals);
         tvEmptyFav = view.findViewById(R.id.tvEmptyFav);
+
         adapter = new FavMealAdapter(this);
         rvFavMeals.setAdapter(adapter);
-        presenter = new FavMealsPresenterImp(getContext(), this);
-        progressBar.setVisibility(VISIBLE);
-        presenter.loadFavMeals().observe(getViewLifecycleOwner(), new Observer<List<FavMealRoom>>() {
-            @Override
-            public void onChanged(List<FavMealRoom> favMealRooms) {
-                progressBar.setVisibility(View.GONE);
-                if (favMealRooms == null || favMealRooms.isEmpty()) {
-                    tvEmptyFav.setVisibility(View.VISIBLE);
-                    rvFavMeals.setVisibility(View.GONE);
-                } else {
-                    tvEmptyFav.setVisibility(View.GONE);
-                    rvFavMeals.setVisibility(View.VISIBLE);
-                    adapter.setFavMeals(favMealRooms);
-                }
-            }
-        });
 
+        presenter = new FavMealsPresenterImp(getContext(), this);
+
+
+        progressBar.setVisibility(VISIBLE);
+        presenter.loadFavMeals();
+    }
+
+    @Override
+    public void showFavMeals(List<FavMealRoom> favMeals) {
+        progressBar.setVisibility(GONE);
+
+        if (favMeals == null || favMeals.isEmpty()) {
+            tvEmptyFav.setVisibility(VISIBLE);
+            rvFavMeals.setVisibility(GONE);
+        } else {
+            tvEmptyFav.setVisibility(GONE);
+            rvFavMeals.setVisibility(VISIBLE);
+
+            adapter.setFavMeals(favMeals);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void deleteFavMealSuccess() {
         Toast.makeText(requireContext(), "Meal deleted successfully", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void showErrorMessage(String error) {
+        progressBar.setVisibility(GONE);
+        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDeleteFavClick(FavMealRoom meal) {
         presenter.deleteFavMeal(meal);
-
     }
 
     @Override
@@ -99,6 +101,13 @@ public class FavouriteMealsFragment extends Fragment implements FavMealsViews, O
         action.setSource("fromFav");
 
         NavHostFragment.findNavController(this).navigate(action);
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (presenter != null) {
+            presenter.dispose();
+        }
     }
 }

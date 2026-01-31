@@ -7,8 +7,6 @@ import com.example.yummy.data.auth.AuthRepo;
 import com.example.yummy.data.common.SessionManager;
 import com.example.yummy.data.meal.MealRepo;
 import com.example.yummy.ui.auth.login.view.LoginView;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -16,6 +14,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginPresenterImp implements LoginPresenter {
 
+    private static final String TAG = "LoginPresenter";
     private AuthRepo authRepo;
     private LoginView view;
     private SessionManager sessionManager;
@@ -37,36 +36,29 @@ public class LoginPresenterImp implements LoginPresenter {
         }
 
         view.showLoading();
-
         disposables.add(
                 authRepo.login(email.trim(), password.trim())
                         .subscribeOn(Schedulers.io())
+                        .flatMapCompletable(user -> {
+                            sessionManager.setGuest(false);
+                            return mealRepo.clearAllTables()
+                                    .andThen(mealRepo.syncFavFromFirestore())
+                                    .andThen(mealRepo.syncPlanedFromFirestore());
+                        })
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                user -> {
-
-                                    mealRepo.syncFavFromFirestore();
-                                    mealRepo.syncPlanedFromFirestore();
-                                    sessionManager.setGuest(false);
-
+                                () -> {
                                     view.hideLoading();
                                     view.showMessage("Login Success");
                                     view.navigateToHome();
                                 },
                                 throwable -> {
                                     view.hideLoading();
-                                    String errorMessage;
-                                    if (throwable instanceof FirebaseAuthInvalidUserException) {
-                                        errorMessage = "Email not registered";
-                                    } else if (throwable instanceof FirebaseAuthInvalidCredentialsException) {
-                                        errorMessage = "Wrong password";
-                                    } else {
-                                        errorMessage = throwable.getMessage() != null ? throwable.getMessage() : "Login failed, try again";
-                                    }
-                                    view.showMessage(errorMessage);
+                                    view.showMessage("Login failed");
                                 }
                         )
         );
+
     }
 
     @Override

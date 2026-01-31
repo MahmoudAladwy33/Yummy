@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/calenderFragment"
-        android:name="com.example.yummy.ui.home.calendar.CalendarFragment"
+        android:name="com.example.yummy.ui.home.calendar.view.CalendarFragment"
         android:label="fragment_calender"
         tools:layout="@layout/fragment_calendar">
         <action

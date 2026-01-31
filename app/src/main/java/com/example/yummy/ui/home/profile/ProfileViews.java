@@ -6,4 +6,6 @@ public interface ProfileViews {
     void showUserEmail(String email);
 
     void navigateToLoginScreen();
+
+
 }

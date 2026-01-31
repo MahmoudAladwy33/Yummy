@@ -3,16 +3,18 @@ package com.example.yummy.ui.home.home.presenter;
 import android.content.Context;
 
 import com.example.yummy.data.meal.MealRepo;
-import com.example.yummy.data.meal.datasource.remote.MealsNetworkResponse;
-import com.example.yummy.data.meal.model.Meal;
 import com.example.yummy.ui.home.home.view.RandomMealViews;
 
-import java.util.List;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RandomMealPresenterImp implements RandomMealPresenter {
 
     private MealRepo mealRepo;
     private RandomMealViews randomMealViews;
+
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public RandomMealPresenterImp(Context context, RandomMealViews randomMealViews) {
         this.mealRepo = new MealRepo(context);
@@ -22,19 +24,30 @@ public class RandomMealPresenterImp implements RandomMealPresenter {
     @Override
     public void getRandomMeals() {
         randomMealViews.showLoading();
-        mealRepo.getRandomMeal(new MealsNetworkResponse() {
-            @Override
-            public void onSuccess(List<Meal> mealList) {
-                randomMealViews.hideLoading();
-                randomMealViews.showRandomMeal(mealList.get(0));
 
-            }
 
-            @Override
-            public void onError(String errorMessage) {
-                randomMealViews.hideLoading();
-                randomMealViews.showError(errorMessage);
-            }
-        });
+        disposables.add(
+                mealRepo.getRandomMeal()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                mealList -> {
+                                    randomMealViews.hideLoading();
+                                    if (mealList != null && !mealList.isEmpty()) {
+                                        randomMealViews.showRandomMeal(mealList.get(0));
+                                    }
+                                },
+                                throwable -> {
+                                    randomMealViews.hideLoading();
+                                    randomMealViews.showError(throwable.getMessage());
+                                }
+                        )
+        );
+    }
+
+
+    @Override
+    public void dispose() {
+        disposables.clear();
     }
 }

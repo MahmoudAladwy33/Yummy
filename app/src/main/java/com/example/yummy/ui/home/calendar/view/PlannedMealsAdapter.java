@@ -1,4 +1,4 @@
-package com.example.yummy.ui.home.calendar;
+package com.example.yummy.ui.home.calendar.view;
 
 import android.view.LayoutInflater;
 import android.view.View;

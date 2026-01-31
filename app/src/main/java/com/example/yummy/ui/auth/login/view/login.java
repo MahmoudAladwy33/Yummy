@@ -107,8 +107,12 @@ public class login extends Fragment implements LoginView, GoogleView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        gPresenter.dispose();
-        presenter.dispose();
+        if (gPresenter != null) {
+            gPresenter.dispose();
+        }
+        if (presenter != null) {
+            presenter.dispose();
+        }
     }
 
     @Override
