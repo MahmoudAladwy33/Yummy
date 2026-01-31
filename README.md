@@ -45,5 +45,3 @@ For each meal, the app displays:
 - Room (Local database)
 - Firebase Authentication & Firestore
 
-## Inspiration
-The app is inspired by **SideChef**, aiming to provide easy meal planning and discovery for both casual users and meal enthusiasts.
